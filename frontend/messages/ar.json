@@ -318,6 +318,248 @@
       "borrow": "استعارة",
       "reserve": "حجز",
       "viewDetails": "عرض التفاصيل"
+    },
+    "pagination": {
+      "showingResults": "عرض {start}-{end} من {total} كتاب",
+      "itemsPerPage": "عدد العناصر في الصفحة:",
+      "previous": "السابق",
+      "next": "التالي"
     }
+  },
+  "circulation": {
+    "title": "إدارة الإعارات",
+    "subtitle": "إدارة إصدار وإرجاع الكتب وتتبع سجلات الإعارة",
+    "noRecords": "لم يتم العثور على سجلات إعارة",
+    "actions": {
+      "issueBook": "إصدار كتاب",
+      "returnBook": "إرجاع كتاب",
+      "exportReport": "تصدير التقرير"
+    },
+    "statistics": {
+      "activeIssues": "الإعارات النشطة",
+      "overdueBooks": "الكتب المتأخرة",
+      "returnedToday": "المرتجعة اليوم",
+      "reservedBooks": "الكتب المحجوزة"
+    },
+    "search": {
+      "placeholder": "البحث باسم المستخدم، عنوان الكتاب، أو المعرف..."
+    },
+    "filters": {
+      "status": "الحالة",
+      "dueDate": "تاريخ الاستحقاق",
+      "userType": "نوع المستخدم",
+      "dateRange": "نطاق التاريخ",
+      "allStatus": "كل الحالات",
+      "allDueDates": "جميع تواريخ الاستحقاق",
+      "allUserTypes": "جميع أنواع المستخدمين",
+      "dueToday": "مستحقة اليوم",
+      "dueTomorrow": "مستحقة غداً",
+      "dueThisWeek": "مستحقة هذا الأسبوع",
+      "overdue": "متأخرة",
+      "student": "طالب",
+      "faculty": "أعضاء هيئة التدريس",
+      "staff": "موظفون",
+      "clear": "مسح الفلاتر",
+      "activeFilters": "الفلاتر النشطة:"
+    },
+    "status": {
+      "active": "نشط",
+      "overdue": "متأخر",
+      "returned": "مُرجع",
+      "reserved": "محجوز"
+    },
+    "table": {
+      "user": "المستخدم",
+      "book": "الكتاب",
+      "issueDate": "تاريخ الإصدار",
+      "dueDate": "تاريخ الاستحقاق",
+      "status": "الحالة",
+      "actions": "الإجراءات"
+    },
+    "daysLeft": "{days} يوم متبقي",
+    "daysOverdue": "{days} يوم متأخر",
+    "dueToday": "مستحق اليوم",
+    "modals": {
+      "issue": {
+        "title": "إصدار كتاب جديد",
+        "userLabel": "البحث عن مستخدم",
+        "userPlaceholder": "أدخل اسم المستخدم أو المعرف...",
+        "bookLabel": "البحث عن كتاب",
+        "bookPlaceholder": "أدخل عنوان الكتاب أو ISBN...",
+        "issueDate": "تاريخ الإصدار",
+        "dueDate": "تاريخ الاستحقاق",
+        "sendEmail": "إرسال إشعار بالبريد الإلكتروني",
+        "printReceipt": "طباعة إيصال",
+        "cancel": "إلغاء",
+        "submit": "إصدار الكتاب"
+      },
+      "return": {
+        "title": "إرجاع كتاب",
+        "bookIdLabel": "مسح/إدخال معرف الكتاب",
+        "bookIdPlaceholder": "ISBN أو معرف الكتاب...",
+        "bookDetails": "تفاصيل الكتاب",
+        "bookTitle": "العنوان",
+        "borrower": "المستعير",
+        "dueDate": "تاريخ الاستحقاق",
+        "onTime": "في الوقت المحدد",
+        "overdue": "{days} يوم متأخر",
+        "fineAmount": "الغرامة: {amount} ريال عماني",
+        "conditionLabel": "حالة الكتاب",
+        "conditions": {
+          "good": "جيد",
+          "fair": "مقبول",
+          "damaged": "تالف"
+        },
+        "notesLabel": "ملاحظات (اختياري)",
+        "notesPlaceholder": "أي ملاحظات إضافية...",
+        "cancel": "إلغاء",
+        "submit": "معالجة الإرجاع"
+      }
+    }
+  },
+  "reports": {
+    "title": "التقارير والتحليلات",
+    "subtitle": "إنشاء تقارير شاملة وتتبع التحليلات",
+    "breadcrumb": "التقارير",
+    "stats": {
+      "totalReports": "إجمالي التقارير المُنشأة",
+      "activePeriod": "فترة البيانات النشطة",
+      "exports": "عمليات التصدير",
+      "categories": "فئات التقارير",
+      "thisMonth": "هذا الشهر",
+      "thisWeek": "هذا الأسبوع",
+      "active": "نشط",
+      "types": "أنواع"
+    },
+    "types": {
+      "selectTitle": "اختر نوع التقرير",
+      "circulation": {
+        "title": "تقرير الإعارة",
+        "description": "تتبع استعارة الكتب والإرجاع واتجاهات الإعارة عبر جميع فروع المكتبة"
+      },
+      "userActivity": {
+        "title": "تقرير نشاط المستخدمين",
+        "description": "تحليل تسجيلات المستخدمين وأنماط المشاركة وعادات القراءة"
+      },
+      "collection": {
+        "title": "تقرير المجموعة",
+        "description": "نظرة عامة على مجموعة المكتبة منظمة حسب الفئة واللغة"
+      },
+      "financial": {
+        "title": "التقرير المالي",
+        "description": "تتبع الغرامات المحصلة والمدفوعات المعلقة والمبالغ المعفاة"
+      },
+      "overview": {
+        "title": "تقرير عام",
+        "description": "إحصائيات واتجاهات ومقاييس أداء شاملة على مستوى النظام"
+      }
+    },
+    "filters": {
+      "title": "الفلاتر والتكوين",
+      "dateRange": "النطاق الزمني",
+      "selectDateRange": "اختر النطاق الزمني",
+      "status": "الحالة",
+      "category": "الفئة",
+      "allStatus": "كل الحالات",
+      "allCategories": "كل الفئات",
+      "active": "نشط",
+      "completed": "مكتمل",
+      "pending": "معلق",
+      "generate": "إنشاء التقرير",
+      "clearAll": "مسح الكل",
+      "activeFilters": "الفلاتر النشطة",
+      "presets": {
+        "thisWeek": "هذا الأسبوع",
+        "thisMonth": "هذا الشهر",
+        "lastMonth": "الشهر الماضي",
+        "threeMonths": "3 أشهر",
+        "sixMonths": "6 أشهر",
+        "thisYear": "هذا العام"
+      }
+    },
+    "charts": {
+      "trendsOverTime": "الاتجاهات عبر الزمن",
+      "distribution": "التوزيع حسب الفئة",
+      "period": {
+        "week": "أسبوع",
+        "month": "شهر",
+        "year": "سنة"
+      },
+      "export": "تصدير",
+      "reportsGenerated": "التقارير المُنشأة",
+      "categories": {
+        "fiction": "خيال",
+        "nonFiction": "غير خيالي",
+        "reference": "مرجع",
+        "science": "علوم",
+        "history": "تاريخ",
+        "art": "فن"
+      },
+      "months": {
+        "jan": "يناير",
+        "feb": "فبراير",
+        "mar": "مارس",
+        "apr": "أبريل",
+        "may": "مايو",
+        "jun": "يونيو",
+        "jul": "يوليو",
+        "aug": "أغسطس",
+        "sep": "سبتمبر",
+        "oct": "أكتوبر",
+        "nov": "نوفمبر",
+        "dec": "ديسمبر"
+      }
+    },
+    "table": {
+      "title": "ملخص التقرير",
+      "id": "المعرف",
+      "name": "اسم التقرير",
+      "category": "الفئة",
+      "date": "تاريخ الإنشاء",
+      "status": "الحالة",
+      "actions": "الإجراءات",
+      "noData": "لا توجد بيانات متاحة",
+      "exportTable": "تصدير الجدول",
+      "downloadReport": "تنزيل التقرير",
+      "viewDetails": "عرض التفاصيل",
+      "download": "تنزيل",
+      "delete": "حذف",
+      "showingResults": "عرض {start}-{end} من {total} نتيجة"
+    },
+    "reportNames": {
+      "monthlyCirculation": "تقرير الإعارة الشهري",
+      "userEngagementQ1": "تقرير تفاعل المستخدمين - الربع الأول",
+      "collectionAudit": "مراجعة المجموعة",
+      "financialSummary": "الملخص المالي",
+      "systemOverview": "نظرة عامة على النظام",
+      "branchPerformance": "أداء الفروع",
+      "userDemographics": "التركيبة السكانية للمستخدمين",
+      "collectionGapAnalysis": "تحليل فجوات المجموعة"
+    },
+    "categories": {
+      "circulation": "الإعارة",
+      "userActivity": "نشاط المستخدمين",
+      "collection": "المجموعة",
+      "financial": "مالي",
+      "overview": "نظرة عامة"
+    },
+    "statuses": {
+      "completed": "مكتمل",
+      "pending": "معلق",
+      "active": "نشط"
+    },
+    "export": {
+      "title": "تصدير التقرير",
+      "format": "التنسيق",
+      "pdf": "PDF",
+      "excel": "Excel",
+      "csv": "CSV",
+      "exporting": "جاري التصدير...",
+      "success": "تم تصدير التقرير بنجاح",
+      "error": "فشل تصدير التقرير"
+    },
+    "loading": "جاري تحميل التقارير...",
+    "error": "فشل تحميل التقارير",
+    "retry": "إعادة المحاولة"
   }
 }

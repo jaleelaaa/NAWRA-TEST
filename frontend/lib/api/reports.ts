@@ -14,10 +14,23 @@ import {
 } from './types';
 
 /**
- * Get dashboard statistics
+ * Get reports dashboard statistics (new)
+ */
+export const getReportsDashboardStats = async (): Promise<{
+  total_reports: { count: number; change: number };
+  active_period: { start_date: string; end_date: string; days_active: number };
+  export_operations: { count: number; change: number; period: string };
+  categories: { count: number; active_types: string[] };
+}> => {
+  const response = await apiClient.get('/reports/dashboard');
+  return response.data;
+};
+
+/**
+ * Get dashboard statistics (legacy)
  */
 export const getDashboardStats = async (): Promise<DashboardStats> => {
-  const response = await apiClient.get<DashboardStats>('/reports/dashboard');
+  const response = await apiClient.get<DashboardStats>('/dashboard/stats');
   return response.data;
 };
 
@@ -155,5 +168,61 @@ export const getOverdueReport = async (): Promise<{
   }>;
 }> => {
   const response = await apiClient.get('/reports/overdue');
+  return response.data;
+};
+
+/**
+ * Get report trends over time
+ */
+export const getReportTrends = async (period: 'week' | 'month' | 'year' = 'week'): Promise<{
+  data: Array<{ date: string; date_full: string; value: number }>;
+  period: string;
+}> => {
+  const response = await apiClient.get('/reports/trends', {
+    params: { period },
+  });
+  return response.data;
+};
+
+/**
+ * Get report distribution by category
+ */
+export const getReportDistribution = async (): Promise<{
+  data: Array<{ category: string; count: number }>;
+  total: number;
+}> => {
+  const response = await apiClient.get('/reports/distribution');
+  return response.data;
+};
+
+/**
+ * Get report summary with history
+ */
+export const getReportSummary = async (
+  page: number = 1,
+  pageSize: number = 8,
+  category?: string,
+  status?: string
+): Promise<{
+  items: Array<{
+    id: number;
+    report_name: string;
+    category: string;
+    date_generated: string;
+    status: string;
+  }>;
+  total: number;
+  page: number;
+  page_size: number;
+  total_pages: number;
+}> => {
+  const response = await apiClient.get('/reports/summary', {
+    params: {
+      page,
+      page_size: pageSize,
+      category: category !== 'all' ? category : undefined,
+      status: status !== 'all' ? status : undefined,
+    },
+  });
   return response.data;
 };

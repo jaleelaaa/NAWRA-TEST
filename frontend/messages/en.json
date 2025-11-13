@@ -318,6 +318,248 @@
       "borrow": "Borrow",
       "reserve": "Reserve",
       "viewDetails": "View Details"
+    },
+    "pagination": {
+      "showingResults": "Showing {start}-{end} of {total} books",
+      "itemsPerPage": "Items per page:",
+      "previous": "Previous",
+      "next": "Next"
     }
+  },
+  "circulation": {
+    "title": "Circulation Management",
+    "subtitle": "Manage book issues, returns, and track circulation records",
+    "noRecords": "No circulation records found",
+    "actions": {
+      "issueBook": "Issue Book",
+      "returnBook": "Return Book",
+      "exportReport": "Export Report"
+    },
+    "statistics": {
+      "activeIssues": "Active Issues",
+      "overdueBooks": "Overdue Books",
+      "returnedToday": "Returned Today",
+      "reservedBooks": "Reserved Books"
+    },
+    "search": {
+      "placeholder": "Search by user name, book title, or ID..."
+    },
+    "filters": {
+      "status": "Status",
+      "dueDate": "Due Date",
+      "userType": "User Type",
+      "dateRange": "Date Range",
+      "allStatus": "All Status",
+      "allDueDates": "All Due Dates",
+      "allUserTypes": "All User Types",
+      "dueToday": "Due Today",
+      "dueTomorrow": "Due Tomorrow",
+      "dueThisWeek": "Due This Week",
+      "overdue": "Overdue",
+      "student": "Student",
+      "faculty": "Faculty",
+      "staff": "Staff",
+      "clear": "Clear Filters",
+      "activeFilters": "Active filters:"
+    },
+    "status": {
+      "active": "Active",
+      "overdue": "Overdue",
+      "returned": "Returned",
+      "reserved": "Reserved"
+    },
+    "table": {
+      "user": "User",
+      "book": "Book",
+      "issueDate": "Issue Date",
+      "dueDate": "Due Date",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "daysLeft": "{days} days left",
+    "daysOverdue": "{days} days overdue",
+    "dueToday": "Due Today",
+    "modals": {
+      "issue": {
+        "title": "Issue New Book",
+        "userLabel": "Search User",
+        "userPlaceholder": "Enter user name or ID...",
+        "bookLabel": "Search Book",
+        "bookPlaceholder": "Enter book title or ISBN...",
+        "issueDate": "Issue Date",
+        "dueDate": "Due Date",
+        "sendEmail": "Send email notification",
+        "printReceipt": "Print receipt",
+        "cancel": "Cancel",
+        "submit": "Issue Book"
+      },
+      "return": {
+        "title": "Return Book",
+        "bookIdLabel": "Scan/Enter Book ID",
+        "bookIdPlaceholder": "ISBN or Book ID...",
+        "bookDetails": "Book Details",
+        "bookTitle": "Title",
+        "borrower": "Borrower",
+        "dueDate": "Due Date",
+        "onTime": "On Time",
+        "overdue": "{days} Days Overdue",
+        "fineAmount": "Fine: {amount} OMR",
+        "conditionLabel": "Book Condition",
+        "conditions": {
+          "good": "Good",
+          "fair": "Fair",
+          "damaged": "Damaged"
+        },
+        "notesLabel": "Notes (Optional)",
+        "notesPlaceholder": "Any additional notes...",
+        "cancel": "Cancel",
+        "submit": "Process Return"
+      }
+    }
+  },
+  "reports": {
+    "title": "Reports & Analytics",
+    "subtitle": "Generate comprehensive reports and track analytics",
+    "breadcrumb": "Reports",
+    "stats": {
+      "totalReports": "Total Reports Generated",
+      "activePeriod": "Active Data Period",
+      "exports": "Export Operations",
+      "categories": "Report Categories",
+      "thisMonth": "this month",
+      "thisWeek": "this week",
+      "active": "active",
+      "types": "types"
+    },
+    "types": {
+      "selectTitle": "Select Report Type",
+      "circulation": {
+        "title": "Circulation Report",
+        "description": "Track book loans, returns, and circulation trends across all library branches"
+      },
+      "userActivity": {
+        "title": "User Activity Report",
+        "description": "Analyze user registrations, engagement patterns, and reading habits"
+      },
+      "collection": {
+        "title": "Collection Report",
+        "description": "Overview of library collection organized by category and language"
+      },
+      "financial": {
+        "title": "Financial Report",
+        "description": "Track fines collected, pending payments, and waived amounts"
+      },
+      "overview": {
+        "title": "Overview Report",
+        "description": "Comprehensive system-wide statistics, trends, and performance metrics"
+      }
+    },
+    "filters": {
+      "title": "Filters & Configuration",
+      "dateRange": "Date Range",
+      "selectDateRange": "Select date range",
+      "status": "Status",
+      "category": "Category",
+      "allStatus": "All Status",
+      "allCategories": "All Categories",
+      "active": "Active",
+      "completed": "Completed",
+      "pending": "Pending",
+      "generate": "Generate Report",
+      "clearAll": "Clear All",
+      "activeFilters": "Active Filters",
+      "presets": {
+        "thisWeek": "This Week",
+        "thisMonth": "This Month",
+        "lastMonth": "Last Month",
+        "threeMonths": "3 Months",
+        "sixMonths": "6 Months",
+        "thisYear": "This Year"
+      }
+    },
+    "charts": {
+      "trendsOverTime": "Trends Over Time",
+      "distribution": "Distribution by Category",
+      "period": {
+        "week": "Week",
+        "month": "Month",
+        "year": "Year"
+      },
+      "export": "Export",
+      "reportsGenerated": "Reports Generated",
+      "categories": {
+        "fiction": "Fiction",
+        "nonFiction": "Non-Fiction",
+        "reference": "Reference",
+        "science": "Science",
+        "history": "History",
+        "art": "Art"
+      },
+      "months": {
+        "jan": "Jan",
+        "feb": "Feb",
+        "mar": "Mar",
+        "apr": "Apr",
+        "may": "May",
+        "jun": "Jun",
+        "jul": "Jul",
+        "aug": "Aug",
+        "sep": "Sep",
+        "oct": "Oct",
+        "nov": "Nov",
+        "dec": "Dec"
+      }
+    },
+    "table": {
+      "title": "Report Summary",
+      "id": "ID",
+      "name": "Report Name",
+      "category": "Category",
+      "date": "Date Generated",
+      "status": "Status",
+      "actions": "Actions",
+      "noData": "No data available",
+      "exportTable": "Export Table",
+      "downloadReport": "Download Report",
+      "viewDetails": "View Details",
+      "download": "Download",
+      "delete": "Delete",
+      "showingResults": "Showing {start}-{end} of {total} results"
+    },
+    "reportNames": {
+      "monthlyCirculation": "Monthly Circulation",
+      "userEngagementQ1": "User Engagement Q1",
+      "collectionAudit": "Collection Audit",
+      "financialSummary": "Financial Summary",
+      "systemOverview": "System Overview",
+      "branchPerformance": "Branch Performance",
+      "userDemographics": "User Demographics",
+      "collectionGapAnalysis": "Collection Gap Analysis"
+    },
+    "categories": {
+      "circulation": "Circulation",
+      "userActivity": "User Activity",
+      "collection": "Collection",
+      "financial": "Financial",
+      "overview": "Overview"
+    },
+    "statuses": {
+      "completed": "Completed",
+      "pending": "Pending",
+      "active": "Active"
+    },
+    "export": {
+      "title": "Export Report",
+      "format": "Format",
+      "pdf": "PDF",
+      "excel": "Excel",
+      "csv": "CSV",
+      "exporting": "Exporting...",
+      "success": "Report exported successfully",
+      "error": "Failed to export report"
+    },
+    "loading": "Loading reports...",
+    "error": "Failed to load reports",
+    "retry": "Retry"
   }
 }
