@@ -73,3 +73,7 @@ desktop.ini
 secrets/
 credentials/
 .claude/
+
+# Auto-generated documentation
+ARCHITECTURE_DIAGRAM.md
+CODEBASE_OVERVIEW.md
