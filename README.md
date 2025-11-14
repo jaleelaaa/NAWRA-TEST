@@ -90,6 +90,21 @@ docker-compose up -d
 ## ✨ Features
 
 <details open>
+<summary><b>📱 Progressive Web App (NEW!)</b></summary>
+
+- ✅ **Installable** on desktop and mobile devices
+- ✅ **Offline Support** with intelligent caching
+- ✅ **Service Worker** for fast, reliable performance
+- ✅ **Push Notifications** (infrastructure ready)
+- ✅ **Camera Barcode Scanner** for quick book lookup
+- ✅ **Mobile-Optimized UI** with bottom navigation
+- ✅ **Quick Search** with real-time results
+- ✅ **Automatic Updates** with user notification
+- ✅ **Home Screen Installation** for app-like experience
+
+</details>
+
+<details open>
 <summary><b>📖 Catalog Management</b></summary>
 
 - ✅ Multi-level inventory (Instance → Holdings → Items)
@@ -394,6 +409,8 @@ CREATE DATABASE nawra_lms;
 | Documentation | Description |
 |--------------|-------------|
 | [📖 API Documentation](http://localhost:8000/docs) | Interactive Swagger UI |
+| [📱 PWA Setup Guide](PWA_SETUP_GUIDE.md) | Progressive Web App configuration |
+| [🚀 Phase 4 Implementation](PHASE_4_IMPLEMENTATION_COMPLETE.md) | Mobile & Advanced Features |
 | [📘 User Manual](docs/user-manual/) | Complete user guides |
 | [🏗️ Architecture Guide](docs/architecture.md) | System design & architecture |
 | [🔧 Developer Guide](docs/developer-guide.md) | Contributing guidelines |

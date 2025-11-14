@@ -1,0 +1,27 @@
+# NAWRA Library Management System - Robots.txt
+# Allow search engines to crawl public pages
+
+User-agent: *
+Allow: /
+Allow: /en
+Allow: /ar
+Allow: /en/login
+Allow: /ar/login
+
+# Disallow admin and private areas
+Disallow: /api/
+Disallow: /en/admin/
+Disallow: /ar/admin/
+Disallow: /en/dashboard/
+Disallow: /ar/dashboard/
+
+# Allow service worker and manifest
+Allow: /sw.js
+Allow: /manifest.json
+Allow: /icons/
+
+# Sitemap location (update with your domain)
+# Sitemap: https://yourdomain.com/sitemap.xml
+
+# Crawl-delay (optional, helps prevent server overload)
+Crawl-delay: 1
