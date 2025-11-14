@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <!-- Background -->
+  <rect width="128" height="128" fill="#2563eb" rx="12.8"/>
+
+  <!-- Book Icon -->
+  <g transform="translate(32, 32)">
+    <rect x="0" y="0" width="64" height="70.4" fill="white" rx="3.84"/>
+    <rect x="6.4" y="6.4" width="51.2" height="57.6" fill="#e0e7ff" rx="2.56"/>
+    <line x1="12.8" y1="19.2" x2="51.2" y2="19.2" stroke="#2563eb" stroke-width="1.92" stroke-linecap="round"/>
+    <line x1="12.8" y1="28.16" x2="44.8" y2="28.16" stroke="#2563eb" stroke-width="1.92" stroke-linecap="round"/>
+    <line x1="12.8" y1="37.12" x2="51.2" y2="37.12" stroke="#2563eb" stroke-width="1.92" stroke-linecap="round"/>
+  </g>
+</svg>

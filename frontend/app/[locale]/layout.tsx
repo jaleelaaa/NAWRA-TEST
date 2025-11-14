@@ -23,7 +23,34 @@ const cairo = Cairo({
 
 export const metadata: Metadata = {
   title: "NAWRA - Library Management System",
-  description: "Family of Oman Ministry Library Management System",
+  description: "Library Management System for Ministry of Education, Sultanate of Oman - نظام إدارة المكتبة لوزارة التربية والتعليم بسلطنة عمان",
+  applicationName: "NAWRA",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "NAWRA",
+  },
+  formatDetection: {
+    telephone: false,
+  },
+  manifest: "/manifest.json",
+  themeColor: "#2563eb",
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 5,
+    userScalable: true,
+  },
+  icons: {
+    icon: [
+      { url: "/icons/icon-192x192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icons/icon-512x512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: [
+      { url: "/icons/icon-152x152.png", sizes: "152x152", type: "image/png" },
+      { url: "/icons/icon-180x180.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
 };
 
 export function generateStaticParams() {

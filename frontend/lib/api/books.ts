@@ -253,6 +253,33 @@ export const getRecentBooks = async (pageSize: number = 12): Promise<BookListRes
 };
 
 // ============================================================================
+// Barcode Operations
+// ============================================================================
+
+/**
+ * Lookup book by barcode
+ */
+export const getBookByBarcode = async (barcode: string): Promise<BookResponse> => {
+  const response = await apiClient.get<BookResponse>(`/books/barcode/${barcode}`);
+  return response.data;
+};
+
+/**
+ * Generate barcode for book
+ */
+export const generateBarcode = async (bookId: string): Promise<{ barcode: string }> => {
+  const response = await apiClient.post<{ barcode: string }>(`/books/${bookId}/barcode/generate`);
+  return response.data;
+};
+
+/**
+ * Get barcode image URL
+ */
+export const getBarcodeImage = (bookId: string): string => {
+  return `${apiClient.defaults.baseURL}/books/${bookId}/barcode/image`;
+};
+
+// ============================================================================
 // Export all for convenience
 // ============================================================================
 
@@ -288,4 +315,9 @@ export default {
   getBooksByCategory,
   getBooksByLanguage,
   getRecentBooks,
+
+  // Barcode operations
+  getBookByBarcode,
+  generateBarcode,
+  getBarcodeImage,
 };
