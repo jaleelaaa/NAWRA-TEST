@@ -77,13 +77,13 @@ export function BookCard({ book, viewMode, onEdit, onDelete }: BookCardProps) {
 
   if (viewMode === "list") {
     return (
-      <Card className="flex gap-4 overflow-hidden border transition-colors hover:border-primary hover:shadow-lg hover:bg-accent/5 p-4">
+      <Card className="flex gap-4 overflow-hidden border-2 border-emerald-100/50 transition-all hover:border-emerald-300 hover:shadow-lg hover:shadow-emerald-900/10 hover:bg-emerald-50/20 p-4 bg-gradient-to-r from-white to-emerald-50/10 card-hover">
         {/* Thumbnail */}
         <div className="flex-shrink-0">
           <img
             src={book.cover_image_url || "/placeholder.svg"}
             alt={displayTitle}
-            className="h-24 w-16 rounded object-cover shadow-md"
+            className="h-24 w-16 rounded-lg object-cover shadow-md border border-emerald-100"
           />
         </div>
 
@@ -162,14 +162,14 @@ export function BookCard({ book, viewMode, onEdit, onDelete }: BookCardProps) {
   // Grid view
   return (
     <Card
-      className="group relative flex flex-col overflow-hidden border border-border/50 bg-gradient-to-br from-white to-slate-50 transition-all duration-500 hover:shadow-2xl hover:-translate-y-3 hover:border-primary/30"
+      className="group relative flex flex-col overflow-hidden border-2 border-emerald-100/50 bg-gradient-to-br from-white via-emerald-50/10 to-yellow-50/20 transition-all duration-500 hover:shadow-2xl hover:shadow-emerald-900/20 hover:-translate-y-3 hover:border-emerald-300 card-interactive"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Book Cover Container */}
-      <div className="relative overflow-hidden bg-slate-200 aspect-[2/3]">
+      <div className="relative overflow-hidden bg-emerald-100/30 aspect-[2/3]">
         {isNewArrival && (
-          <div className="absolute right-2 top-2 z-20 flex items-center gap-1 rounded-full bg-gradient-to-r from-amber-400 to-orange-500 px-3 py-1.5 text-xs font-bold text-white shadow-lg">
+          <div className="absolute right-2 top-2 z-20 flex items-center gap-1 rounded-full bg-gradient-to-r from-yellow-400 to-yellow-500 px-3 py-1.5 text-xs font-bold text-emerald-900 shadow-lg border border-yellow-600/30">
             <Sparkles className="h-3 w-3 animate-pulse" />
             {tCard("newArrival")}
           </div>
@@ -182,11 +182,11 @@ export function BookCard({ book, viewMode, onEdit, onDelete }: BookCardProps) {
         />
 
         {isHovered && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-gradient-to-t from-black/70 via-black/40 to-transparent backdrop-blur-sm transition-opacity duration-300">
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-gradient-to-t from-emerald-900/80 via-emerald-800/50 to-transparent backdrop-blur-sm transition-opacity duration-300 animate-fade-in">
             <div className="flex gap-2">
               <Button
                 size="sm"
-                className="gap-2 bg-white text-slate-900 hover:bg-slate-100 shadow-lg transform transition-transform hover:scale-105"
+                className="gap-2 bg-white text-emerald-900 hover:bg-yellow-300 hover:text-emerald-900 shadow-lg transform transition-transform hover:scale-110 border-2 border-emerald-200"
               >
                 <Eye className="h-4 w-4" />
                 {tCard("view")}
@@ -195,9 +195,9 @@ export function BookCard({ book, viewMode, onEdit, onDelete }: BookCardProps) {
                 size="sm"
                 variant="secondary"
                 onClick={() => setIsFavorite(!isFavorite)}
-                className="gap-2 shadow-lg transform transition-transform hover:scale-105"
+                className="gap-2 shadow-lg transform transition-transform hover:scale-110 bg-emerald-700 text-white hover:bg-emerald-800"
               >
-                <Heart className={`h-4 w-4 ${isFavorite ? "fill-current text-red-500" : ""}`} />
+                <Heart className={`h-4 w-4 ${isFavorite ? "fill-current text-red-400" : ""}`} />
               </Button>
             </div>
           </div>
@@ -268,26 +268,26 @@ export function BookCard({ book, viewMode, onEdit, onDelete }: BookCardProps) {
         <div className="mt-3 flex gap-2 pt-2">
           <Button
             size="sm"
-            className="flex-1 bg-gradient-to-r from-primary to-primary/80 text-primary-foreground hover:from-primary/90 hover:to-primary/70 font-medium transition-all hover:shadow-lg"
+            className="flex-1 bg-gradient-to-r from-emerald-700 to-emerald-800 text-white hover:from-emerald-800 hover:to-emerald-900 font-semibold transition-all hover:shadow-lg hover:shadow-emerald-900/30 btn-shimmer"
           >
             {tCard("details")}
           </Button>
           {(onEdit || onDelete) && (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button size="icon" variant="ghost" className="h-8 w-8 hover:bg-secondary/10 transition-all">
+                <Button size="icon" variant="ghost" className="h-8 w-8 hover:bg-emerald-100/50 hover:text-emerald-700 transition-all">
                   <MoreVertical className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
+              <DropdownMenuContent align="end" className="border-2 border-emerald-200/50">
                 {onEdit && (
-                  <DropdownMenuItem onClick={() => onEdit(book)}>
-                    <Pencil className="mr-2 h-4 w-4" />
+                  <DropdownMenuItem onClick={() => onEdit(book)} className="hover:bg-emerald-50">
+                    <Pencil className="mr-2 h-4 w-4 text-emerald-700" />
                     {t("edit")}
                   </DropdownMenuItem>
                 )}
                 {onDelete && (
-                  <DropdownMenuItem onClick={() => onDelete(book)} className="text-destructive">
+                  <DropdownMenuItem onClick={() => onDelete(book)} className="text-destructive hover:bg-red-50">
                     <Trash2 className="mr-2 h-4 w-4" />
                     {t("delete")}
                   </DropdownMenuItem>

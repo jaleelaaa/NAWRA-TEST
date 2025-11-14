@@ -49,20 +49,20 @@ export function UserGrid({
 
   const getRoleBadgeColor = (role: string) => {
     const colors = {
-      admin: 'bg-[#C4A647] text-white',
-      librarian: 'bg-[#00693E] text-white',
-      student: 'bg-[#0284C7] text-white',
-      teacher: 'bg-[#8B1538] text-white',
-      patron: 'bg-[#6B7280] text-white',
+      admin: 'bg-gradient-to-r from-yellow-500 to-yellow-600 text-emerald-900 font-bold border border-yellow-600',
+      librarian: 'bg-gradient-to-r from-emerald-600 to-emerald-700 text-white font-bold',
+      student: 'bg-gradient-to-r from-blue-500 to-blue-600 text-white font-bold',
+      teacher: 'bg-gradient-to-r from-emerald-800 to-emerald-900 text-yellow-300 font-bold',
+      patron: 'bg-gradient-to-r from-gray-500 to-gray-600 text-white font-bold',
     };
-    return colors[role as keyof typeof colors] || 'bg-gray-500 text-white';
+    return colors[role as keyof typeof colors] || 'bg-gradient-to-r from-gray-500 to-gray-600 text-white font-bold';
   };
 
   const getStatusBadge = (status: string) => {
     const badges = {
-      active: { color: 'bg-[#00693E]/10 text-[#00693E] border-[#00693E]/20', label: t('status.active') },
-      pending: { color: 'bg-[#0284C7]/10 text-[#0284C7] border-[#0284C7]/20', label: t('status.pending') },
-      inactive: { color: 'bg-[#6B7280]/10 text-[#6B7280] border-[#6B7280]/20', label: t('status.inactive') },
+      active: { color: 'bg-emerald-50 text-emerald-700 border-emerald-300 font-semibold', label: t('status.active') },
+      pending: { color: 'bg-yellow-50 text-yellow-700 border-yellow-300 font-semibold', label: t('status.pending') },
+      inactive: { color: 'bg-gray-50 text-gray-700 border-gray-300 font-semibold', label: t('status.inactive') },
     };
     return badges[status as keyof typeof badges] || badges.inactive;
   };
@@ -95,10 +95,10 @@ export function UserGrid({
             layout
           >
             <Card
-              className={`p-6 hover:shadow-xl bg-white relative overflow-hidden group h-full transition-all ${
+              className={`p-6 hover:shadow-2xl hover:shadow-emerald-900/20 bg-gradient-to-br from-white via-emerald-50/10 to-yellow-50/10 relative overflow-hidden group h-full transition-all duration-300 border-2 card-interactive ${
                 isSelected(user.id)
-                  ? 'border-2 border-[#8B1538] shadow-lg bg-[#8B1538]/5'
-                  : 'hover:border-[#C4A647]'
+                  ? 'border-emerald-600 shadow-lg shadow-emerald-900/30 bg-emerald-50/30'
+                  : 'border-emerald-100/50 hover:border-emerald-300'
               }`}
             >
               {/* Selection Checkbox */}
@@ -125,13 +125,13 @@ export function UserGrid({
                         onToggleUser(user.id);
                       }
                     }}
-                    className="cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#8B1538] focus:ring-offset-2 rounded-md"
+                    className="cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:ring-offset-2 rounded-md"
                   >
                     <div
                       className={`w-6 h-6 rounded-md border-2 flex items-center justify-center transition-all ${
                         isSelected(user.id)
-                          ? 'bg-[#8B1538] border-[#8B1538]'
-                          : 'bg-white border-[#6B7280] hover:border-[#8B1538]'
+                          ? 'bg-emerald-700 border-emerald-700 shadow-md'
+                          : 'bg-white border-gray-400 hover:border-emerald-600'
                       }`}
                     >
                       <AnimatePresence>
@@ -142,7 +142,7 @@ export function UserGrid({
                             exit={{ scale: 0 }}
                             transition={{ type: 'spring', stiffness: 500, damping: 30 }}
                           >
-                            <Check className="h-4 w-4 text-white" />
+                            <Check className="h-4 w-4 text-yellow-300" />
                           </motion.div>
                         )}
                       </AnimatePresence>
@@ -163,15 +163,15 @@ export function UserGrid({
                   animate={{ scale: 1 }}
                   transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
                 >
-                  <Avatar className="h-16 w-16 border-2 border-[#C4A647]">
+                  <Avatar className="h-16 w-16 border-3 border-yellow-500 shadow-lg ring-2 ring-emerald-200 ring-offset-2">
                     <AvatarImage src={user.avatar || '/placeholder.svg'} alt={getDisplayName(user)} />
-                    <AvatarFallback className="bg-gradient-to-br from-[#8B1538] to-[#6B0F2A] text-white font-bold">
+                    <AvatarFallback className="bg-gradient-to-br from-emerald-700 to-emerald-900 text-yellow-300 font-bold text-lg">
                       {getInitials(getDisplayName(user))}
                     </AvatarFallback>
                   </Avatar>
                   <motion.div
-                    className={`absolute ${isRTL ? '-left-1' : '-right-1'} -bottom-1 w-5 h-5 rounded-full border-2 border-white ${
-                      user.is_online ? 'bg-[#00693E]' : 'bg-[#6B7280]'
+                    className={`absolute ${isRTL ? '-left-1' : '-right-1'} -bottom-1 w-5 h-5 rounded-full border-2 border-white shadow-md ${
+                      user.is_online ? 'bg-emerald-600' : 'bg-gray-500'
                     }`}
                     title={user.is_online ? t('card.online') : t('card.offline')}
                     animate={user.is_online ? "pulse" : {}}
@@ -213,7 +213,7 @@ export function UserGrid({
             {/* User Info */}
             <div className="space-y-2">
               <div>
-                <h3 className="font-semibold text-[#8B1538] text-lg">
+                <h3 className="font-bold text-emerald-900 text-lg">
                   {getDisplayName(user)}
                 </h3>
               </div>
@@ -260,24 +260,24 @@ export function UserGrid({
             </div>
 
             {/* Stats */}
-            <div className="mt-4 pt-4 border-t border-[#8B1538]/10">
+            <div className="mt-4 pt-4 border-t-2 border-emerald-200/50">
               <div className="grid grid-cols-3 gap-2 text-center">
-                <div>
-                  <div className="text-lg font-bold text-[#8B1538]">{user.books_borrowed}</div>
-                  <div className="text-xs text-[#6B7280]">{t('card.books')}</div>
+                <div className="bg-emerald-50/50 rounded-lg p-2">
+                  <div className="text-lg font-bold text-emerald-800">{user.books_borrowed}</div>
+                  <div className="text-xs text-emerald-700 font-medium">{t('card.books')}</div>
                 </div>
-                <div>
-                  <div className="text-lg font-bold text-[#DC2626]">
+                <div className="bg-red-50/50 rounded-lg p-2">
+                  <div className="text-lg font-bold text-red-700">
                     {new Intl.NumberFormat(locale === 'ar' ? 'ar-OM' : 'en-US', {
                       style: 'currency',
                       currency: 'OMR'
                     }).format(user.fines)}
                   </div>
-                  <div className="text-xs text-[#6B7280]">{t('card.fines')}</div>
+                  <div className="text-xs text-red-600 font-medium">{t('card.fines')}</div>
                 </div>
-                <div>
-                  <div className="text-xs text-[#6B7280] mt-1">{t('card.lastLogin')}</div>
-                  <div className="text-xs font-medium text-[#8B1538]">{user.last_login}</div>
+                <div className="bg-yellow-50/50 rounded-lg p-2">
+                  <div className="text-xs text-gray-700 font-medium">{t('card.lastLogin')}</div>
+                  <div className="text-xs font-bold text-emerald-800">{user.last_login}</div>
                 </div>
               </div>
             </div>
