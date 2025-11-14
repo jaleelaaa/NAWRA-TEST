@@ -696,3 +696,292 @@ async def get_book_statistics(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Failed to fetch statistics: {str(e)}"
         )
+
+
+# =====================================================
+# Barcode Management Endpoints
+# =====================================================
+
+from fastapi.responses import Response, StreamingResponse
+from app.services.barcode_service import barcode_service
+
+
+@router.post(
+    "/books/{book_id}/barcode/generate",
+    summary="Generate barcode number for book",
+    tags=["Books", "Barcode"]
+)
+async def generate_book_barcode(
+    book_id: UUID,
+    books_service: BooksService = Depends(get_books_service)
+):
+    """
+    Generate and assign a unique barcode number to a book.
+
+    Args:
+        book_id: UUID of the book
+
+    Returns:
+        Dictionary with generated barcode number
+
+    Raises:
+        404: Book not found
+        400: Book already has a barcode
+        500: Failed to generate barcode
+    """
+    try:
+        # Get book
+        book = await books_service.get_book(book_id)
+        if not book:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Book not found"
+            )
+
+        # Check if book already has barcode
+        if book.get('barcode'):
+            return {
+                "barcode_number": book['barcode'],
+                "message": "Book already has a barcode",
+                "book_id": str(book_id)
+            }
+
+        # Generate barcode
+        barcode_number = barcode_service.generate_barcode_number(str(book_id))
+
+        # Update book with barcode
+        await books_service.update_book(book_id, BookUpdate(barcode=barcode_number))
+
+        return {
+            "barcode_number": barcode_number,
+            "message": "Barcode generated successfully",
+            "book_id": str(book_id)
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to generate barcode: {str(e)}"
+        )
+
+
+@router.get(
+    "/books/{book_id}/barcode/image",
+    summary="Get barcode as image",
+    tags=["Books", "Barcode"],
+    responses={
+        200: {
+            "content": {"image/png": {}},
+            "description": "Barcode image in PNG format"
+        }
+    }
+)
+async def get_barcode_image(
+    book_id: UUID,
+    format: str = Query("png", regex="^(png|svg)$"),
+    include_text: bool = Query(True),
+    books_service: BooksService = Depends(get_books_service)
+):
+    """
+    Get barcode as image (PNG or SVG).
+
+    Args:
+        book_id: UUID of the book
+        format: Image format (png or svg)
+        include_text: Include barcode number text below barcode
+
+    Returns:
+        Barcode image
+
+    Raises:
+        404: Book not found or no barcode
+        500: Failed to generate image
+    """
+    try:
+        # Get book
+        book = await books_service.get_book(book_id)
+        if not book:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Book not found"
+            )
+
+        barcode_number = book.get('barcode')
+        if not barcode_number:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Book does not have a barcode. Generate one first."
+            )
+
+        # Generate image
+        if format == 'svg':
+            svg_content = barcode_service.generate_barcode_svg(
+                barcode_number,
+                include_text=include_text
+            )
+            return Response(
+                content=svg_content,
+                media_type="image/svg+xml"
+            )
+        else:  # png
+            png_bytes = barcode_service.generate_barcode_image(
+                barcode_number,
+                include_text=include_text
+            )
+            return Response(
+                content=png_bytes,
+                media_type="image/png"
+            )
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to generate barcode image: {str(e)}"
+        )
+
+
+@router.get(
+    "/books/{book_id}/barcode/label",
+    summary="Get printable barcode label",
+    tags=["Books", "Barcode"],
+    responses={
+        200: {
+            "content": {"application/pdf": {}},
+            "description": "Barcode label in PDF format"
+        }
+    }
+)
+async def get_barcode_label(
+    book_id: UUID,
+    books_service: BooksService = Depends(get_books_service)
+):
+    """
+    Get a printable label with barcode and book information.
+
+    Args:
+        book_id: UUID of the book
+
+    Returns:
+        PDF label
+
+    Raises:
+        404: Book not found or no barcode
+        500: Failed to generate label
+    """
+    try:
+        # Get book
+        book = await books_service.get_book(book_id)
+        if not book:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Book not found"
+            )
+
+        barcode_number = book.get('barcode')
+        if not barcode_number:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Book does not have a barcode. Generate one first."
+            )
+
+        # Generate label PDF
+        pdf_bytes = barcode_service.generate_label_pdf(
+            barcode_number=barcode_number,
+            title=book.get('title', 'N/A'),
+            author=book.get('author', 'N/A'),
+            category=book.get('category', {}).get('name', 'N/A') if isinstance(book.get('category'), dict) else 'N/A',
+            shelf_location=book.get('shelf_location', 'N/A')
+        )
+
+        return StreamingResponse(
+            iter([pdf_bytes]),
+            media_type="application/pdf",
+            headers={
+                "Content-Disposition": f"attachment; filename=label_{barcode_number}.pdf"
+            }
+        )
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to generate label: {str(e)}"
+        )
+
+
+@router.post(
+    "/books/barcode/bulk-labels",
+    summary="Generate bulk barcode labels",
+    tags=["Books", "Barcode"],
+    responses={
+        200: {
+            "content": {"application/pdf": {}},
+            "description": "Bulk barcode labels in PDF format"
+        }
+    }
+)
+async def generate_bulk_labels(
+    book_ids: list[UUID],
+    books_service: BooksService = Depends(get_books_service)
+):
+    """
+    Generate multiple barcode labels in a single PDF for bulk printing.
+
+    Args:
+        book_ids: List of book UUIDs
+
+    Returns:
+        PDF with multiple labels
+
+    Raises:
+        400: No books provided or books not found
+        500: Failed to generate labels
+    """
+    try:
+        if not book_ids:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="No book IDs provided"
+            )
+
+        # Get all books
+        books_data = []
+        for book_id in book_ids:
+            book = await books_service.get_book(book_id)
+            if book and book.get('barcode'):
+                books_data.append({
+                    'barcode_number': book['barcode'],
+                    'title': book.get('title', 'N/A'),
+                    'author': book.get('author', 'N/A'),
+                    'category': book.get('category', {}).get('name', 'N/A') if isinstance(book.get('category'), dict) else 'N/A',
+                    'shelf_location': book.get('shelf_location', 'N/A')
+                })
+
+        if not books_data:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="No books found with barcodes"
+            )
+
+        # Generate bulk PDF
+        pdf_bytes = barcode_service.generate_bulk_labels_pdf(books_data)
+
+        return StreamingResponse(
+            iter([pdf_bytes]),
+            media_type="application/pdf",
+            headers={
+                "Content-Disposition": f"attachment; filename=bulk_labels_{len(books_data)}_items.pdf"
+            }
+        )
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to generate bulk labels: {str(e)}"
+        )
