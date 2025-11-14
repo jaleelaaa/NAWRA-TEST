@@ -1,17 +1,10 @@
 from fastapi import APIRouter
-from .endpoints import auth, analytics, dashboard, users, circulation, reports, settings, books
+from .endpoints import auth, analytics, dashboard, users, circulation, reports, settings, books, health
 
 api_router = APIRouter(prefix="/v1")
 
-# Health check endpoint
-@api_router.get("/health")
-async def health():
-    """
-    API v1 health check
-    """
-    return {"status": "healthy", "version": "1.0.0"}
-
 # Include routers for different modules
+api_router.include_router(health.router, tags=["Health"])
 api_router.include_router(auth.router, prefix="/auth", tags=["Authentication"])
 api_router.include_router(analytics.router, prefix="/analytics", tags=["Analytics"])
 api_router.include_router(dashboard.router, prefix="/dashboard", tags=["Dashboard"])
