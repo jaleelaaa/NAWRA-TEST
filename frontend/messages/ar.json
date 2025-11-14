@@ -731,5 +731,108 @@
       "description": "هل أنت متأكد من رغبتك في إعادة تعيين جميع الإعدادات إلى قيمها الافتراضية؟ لا يمكن التراجع عن هذا الإجراء.",
       "confirm": "إعادة التعيين إلى الافتراضي"
     }
+  },
+  "preservation": {
+    "title": "سجلات الحفظ",
+    "subtitle": "تتبع حالة القطع الأثرية وتاريخ الحفظ",
+    "stats": {
+      "totalRecords": "إجمالي السجلات",
+      "needsRestoration": "تحتاج للترميم",
+      "urgentRestoration": "عاجل",
+      "upcomingInspections": "الفحوصات القادمة",
+      "overdueInspections": "متأخرة",
+      "averageCondition": "متوسط الحالة"
+    },
+    "condition": {
+      "label": "حالة القطعة",
+      "excellent": "ممتاز",
+      "good": "جيد",
+      "fair": "مقبول",
+      "poor": "سيء",
+      "critical": "حرج"
+    },
+    "restoration": {
+      "needed": "يحتاج للترميم",
+      "priority": "الأولوية",
+      "low": "منخفض",
+      "medium": "متوسط",
+      "high": "عالي",
+      "urgent": "عاجل",
+      "notes": "ملاحظات الترميم",
+      "estimatedCost": "التكلفة المقدرة"
+    },
+    "inspection": {
+      "lastDate": "آخر فحص",
+      "nextDate": "الفحص القادم",
+      "frequency": "التكرار",
+      "monthly": "شهري",
+      "quarterly": "ربع سنوي",
+      "yearly": "سنوي"
+    },
+    "environment": {
+      "temperature": "درجة الحرارة (°C)",
+      "humidity": "الرطوبة (%)",
+      "lightExposure": "التعرض للضوء",
+      "minimal": "قليل",
+      "moderate": "متوسط",
+      "high": "عالي"
+    },
+    "damage": {
+      "types": "أنواع الضرر",
+      "water": "ماء",
+      "mold": "عفن",
+      "pest": "حشرات",
+      "physical": "فيزيائي",
+      "chemical": "كيميائي",
+      "fire": "حريق",
+      "uv": "الأشعة فوق البنفسجية",
+      "wear": "استهلاك",
+      "severity": "الخطورة",
+      "minor": "طفيف",
+      "moderate": "متوسط",
+      "severe": "خطير"
+    },
+    "conservation": {
+      "history": "تاريخ الحفظ",
+      "date": "التاريخ",
+      "action": "الإجراء",
+      "conservator": "أخصائي الحفظ",
+      "cost": "التكلفة",
+      "notes": "ملاحظات",
+      "addEntry": "إضافة إدخال"
+    },
+    "form": {
+      "addRecord": "إضافة سجل حفظ",
+      "editRecord": "تعديل سجل الحفظ",
+      "selectBook": "اختر القطعة",
+      "conditionNotes": "ملاحظات الحالة",
+      "damagePhotos": "صور الضرر (URLs)",
+      "cancel": "إلغاء",
+      "save": "حفظ",
+      "update": "تحديث"
+    },
+    "filters": {
+      "all": "جميع السجلات",
+      "byCondition": "حسب الحالة",
+      "needsRestoration": "يحتاج للترميم",
+      "overdueInspection": "فحص متأخر"
+    },
+    "actions": {
+      "addRecord": "إضافة سجل",
+      "viewHistory": "عرض التاريخ",
+      "edit": "تعديل",
+      "delete": "حذف",
+      "export": "تصدير"
+    },
+    "messages": {
+      "deleteConfirm": "هل أنت متأكد من حذف هذا السجل؟",
+      "noRecords": "لا توجد سجلات حفظ",
+      "createSuccess": "تم إنشاء سجل الحفظ بنجاح",
+      "createError": "فشل في إنشاء سجل الحفظ",
+      "updateSuccess": "تم تحديث سجل الحفظ بنجاح",
+      "updateError": "فشل في تحديث سجل الحفظ",
+      "deleteSuccess": "تم حذف سجل الحفظ بنجاح",
+      "deleteError": "فشل في حذف سجل الحفظ"
+    }
   }
 }

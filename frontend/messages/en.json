@@ -731,5 +731,108 @@
       "description": "Are you sure you want to reset all settings to their default values? This action cannot be undone.",
       "confirm": "Reset to Defaults"
     }
+  },
+  "preservation": {
+    "title": "Preservation Records",
+    "subtitle": "Track artifact condition and conservation history",
+    "stats": {
+      "totalRecords": "Total Records",
+      "needsRestoration": "Needs Restoration",
+      "urgentRestoration": "Urgent",
+      "upcomingInspections": "Upcoming Inspections",
+      "overdueInspections": "Overdue",
+      "averageCondition": "Avg. Condition"
+    },
+    "condition": {
+      "label": "Condition Status",
+      "excellent": "Excellent",
+      "good": "Good",
+      "fair": "Fair",
+      "poor": "Poor",
+      "critical": "Critical"
+    },
+    "restoration": {
+      "needed": "Restoration Needed",
+      "priority": "Priority",
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High",
+      "urgent": "Urgent",
+      "notes": "Restoration Notes",
+      "estimatedCost": "Estimated Cost"
+    },
+    "inspection": {
+      "lastDate": "Last Inspection",
+      "nextDate": "Next Inspection",
+      "frequency": "Frequency",
+      "monthly": "Monthly",
+      "quarterly": "Quarterly",
+      "yearly": "Yearly"
+    },
+    "environment": {
+      "temperature": "Temperature (°C)",
+      "humidity": "Humidity (%)",
+      "lightExposure": "Light Exposure",
+      "minimal": "Minimal",
+      "moderate": "Moderate",
+      "high": "High"
+    },
+    "damage": {
+      "types": "Damage Types",
+      "water": "Water",
+      "mold": "Mold",
+      "pest": "Pest",
+      "physical": "Physical",
+      "chemical": "Chemical",
+      "fire": "Fire",
+      "uv": "UV Light",
+      "wear": "Wear & Tear",
+      "severity": "Severity",
+      "minor": "Minor",
+      "moderate": "Moderate",
+      "severe": "Severe"
+    },
+    "conservation": {
+      "history": "Conservation History",
+      "date": "Date",
+      "action": "Action",
+      "conservator": "Conservator",
+      "cost": "Cost",
+      "notes": "Notes",
+      "addEntry": "Add Entry"
+    },
+    "form": {
+      "addRecord": "Add Preservation Record",
+      "editRecord": "Edit Preservation Record",
+      "selectBook": "Select Artifact",
+      "conditionNotes": "Condition Notes",
+      "damagePhotos": "Damage Photos (URLs)",
+      "cancel": "Cancel",
+      "save": "Save",
+      "update": "Update"
+    },
+    "filters": {
+      "all": "All Records",
+      "byCondition": "By Condition",
+      "needsRestoration": "Needs Restoration",
+      "overdueInspection": "Overdue Inspection"
+    },
+    "actions": {
+      "addRecord": "Add Record",
+      "viewHistory": "View History",
+      "edit": "Edit",
+      "delete": "Delete",
+      "export": "Export"
+    },
+    "messages": {
+      "deleteConfirm": "Are you sure you want to delete this preservation record?",
+      "noRecords": "No preservation records found",
+      "createSuccess": "Preservation record created successfully",
+      "createError": "Failed to create preservation record",
+      "updateSuccess": "Preservation record updated successfully",
+      "updateError": "Failed to update preservation record",
+      "deleteSuccess": "Preservation record deleted successfully",
+      "deleteError": "Failed to delete preservation record"
+    }
   }
 }
