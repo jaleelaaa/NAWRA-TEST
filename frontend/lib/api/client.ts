@@ -39,6 +39,18 @@ const authApiClient = axios.create({
  */
 apiClient.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
+    // Check for dev mode (for local development only)
+    if (typeof window !== 'undefined') {
+      const devMode = localStorage.getItem('dev-mode');
+      const devUserId = localStorage.getItem('dev-user-id');
+
+      if (devMode === 'true' && devUserId && config.headers) {
+        // In dev mode, use X-User-Id header instead of Bearer token
+        config.headers['X-User-Id'] = devUserId;
+        return config;
+      }
+    }
+
     // Get access token from auth store
     const accessToken = useAuthStore.getState().accessToken;
 
@@ -77,6 +89,15 @@ apiClient.interceptors.response.use(
     if (error.response?.status === 401 && !originalRequest._retry && !skipRefresh) {
 
       originalRequest._retry = true;
+
+      // Check for dev mode - skip redirect if in dev mode
+      if (typeof window !== 'undefined') {
+        const devMode = localStorage.getItem('dev-mode');
+        if (devMode === 'true') {
+          // In dev mode, don't redirect to login on 401
+          return Promise.reject(error);
+        }
+      }
 
       try {
         // Get refresh token from auth store

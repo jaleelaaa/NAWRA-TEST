@@ -13,6 +13,18 @@ const api = axios.create({
 // Request interceptor - Add auth token to requests
 api.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
+    // Check for dev mode (for local development only)
+    if (typeof window !== 'undefined') {
+      const devMode = localStorage.getItem('dev-mode');
+      const devUserId = localStorage.getItem('dev-user-id');
+
+      if (devMode === 'true' && devUserId && config.headers) {
+        // In dev mode, use X-User-Id header instead of Bearer token
+        config.headers['X-User-Id'] = devUserId;
+        return config;
+      }
+    }
+
     const token = useAuthStore.getState().accessToken;
 
     if (token && config.headers) {
@@ -35,6 +47,15 @@ api.interceptors.response.use(
     // If 401 and we haven't retried yet, try to refresh token
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
+
+      // Check for dev mode - skip token refresh and redirect if in dev mode
+      if (typeof window !== 'undefined') {
+        const devMode = localStorage.getItem('dev-mode');
+        if (devMode === 'true') {
+          // In dev mode, don't try to refresh or redirect - just return the error
+          return Promise.reject(error);
+        }
+      }
 
       try {
         const refreshToken = useAuthStore.getState().refreshToken;

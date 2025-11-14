@@ -42,11 +42,13 @@ export default function UserFormDialog({
   user,
 }: UserFormDialogProps) {
   const t = useTranslations('users');
+  const tc = useTranslations('common');
   const { toast } = useToast();
 
   // Create validation schema
   const createSchema = z.object({
     full_name: z.string().min(2, t('validation.nameMin')),
+    arabic_name: z.string().optional(),
     email: z.string().email(t('validation.emailInvalid')),
     password: z.string().min(8, t('validation.passwordMin')),
     phone: z.string().optional(),
@@ -62,6 +64,7 @@ export default function UserFormDialog({
 
   const editSchema = z.object({
     full_name: z.string().min(2, t('validation.nameMin')),
+    arabic_name: z.string().optional(),
     email: z.string().email(t('validation.emailInvalid')),
     password: z.string().min(8, t('validation.passwordMin')).optional(),
     phone: z.string().optional(),
@@ -89,6 +92,7 @@ export default function UserFormDialog({
     resolver: zodResolver(schema),
     defaultValues: {
       full_name: '',
+      arabic_name: '',
       email: '',
       password: '',
       phone: '',
@@ -109,6 +113,7 @@ export default function UserFormDialog({
     if (open && mode === 'edit' && user) {
       reset({
         full_name: user.full_name,
+        arabic_name: user.arabic_name || '',
         email: user.email,
         password: '',
         phone: user.phone || '',
@@ -120,6 +125,7 @@ export default function UserFormDialog({
     } else if (open && mode === 'create') {
       reset({
         full_name: '',
+        arabic_name: '',
         email: '',
         password: '',
         phone: '',
@@ -230,6 +236,24 @@ export default function UserFormDialog({
             )}
           </div>
 
+          {/* Arabic Name */}
+          <div className="space-y-2">
+            <Label htmlFor="arabic_name" className="text-sm font-medium text-gray-700">
+              {t('form.arabicName')}
+            </Label>
+            <Input
+              id="arabic_name"
+              {...register('arabic_name')}
+              placeholder={t('form.arabicNamePlaceholder')}
+              className={errors.arabic_name ? 'border-red-500' : ''}
+              disabled={isLoading}
+              dir="rtl"
+            />
+            {errors.arabic_name && (
+              <p className="text-sm text-red-500">{errors.arabic_name.message}</p>
+            )}
+          </div>
+
           {/* Email */}
           <div className="space-y-2">
             <Label htmlFor="email" className="text-sm font-medium text-gray-700">
@@ -255,7 +279,7 @@ export default function UserFormDialog({
               {mode === 'create' ? (
                 <span className="text-red-500">*</span>
               ) : (
-                <span className="text-sm text-gray-500">(optional)</span>
+                <span className="text-sm text-gray-500">{tc('optional')}</span>
               )}
             </Label>
             <Input
@@ -271,7 +295,7 @@ export default function UserFormDialog({
             )}
             {mode === 'edit' && (
               <p className="text-xs text-gray-500">
-                Leave blank to keep the current password
+                {t('form.keepCurrentPassword')}
               </p>
             )}
           </div>
@@ -391,7 +415,7 @@ export default function UserFormDialog({
               disabled={isLoading}
             >
               {isLoading
-                ? t('common.loading')
+                ? tc('loading')
                 : mode === 'create'
                 ? t('form.create')
                 : t('form.update')}

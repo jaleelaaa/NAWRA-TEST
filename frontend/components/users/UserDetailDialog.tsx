@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { useMutation } from '@tanstack/react-query';
 import {
@@ -28,6 +29,7 @@ import { Separator } from '@/components/ui/separator';
 import { useToast } from '@/components/ui/use-toast';
 import { usersApi, invalidateQueries } from '@/lib/api';
 import type { UserDetail } from '@/lib/api/types';
+import { DeleteUserDialog } from './DeleteUserDialog';
 
 interface UserDetailDialogProps {
   open: boolean;
@@ -43,8 +45,10 @@ export default function UserDetailDialog({
   onEdit,
 }: UserDetailDialogProps) {
   const t = useTranslations('users');
+  const tc = useTranslations('common');
   const locale = useLocale();
   const { toast } = useToast();
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
   // Delete user mutation
   const deleteMutation = useMutation({
@@ -55,6 +59,7 @@ export default function UserDetailDialog({
         variant: 'default',
       });
       invalidateQueries.users();
+      setDeleteDialogOpen(false);
       onOpenChange(false);
     },
     onError: (error: any) => {
@@ -66,12 +71,15 @@ export default function UserDetailDialog({
     },
   });
 
-  // Handle delete
-  const handleDelete = async () => {
+  // Handle delete button click - open confirmation dialog
+  const handleDelete = () => {
+    setDeleteDialogOpen(true);
+  };
+
+  // Handle confirmed deletion
+  const handleConfirmDelete = async () => {
     if (!user) return;
-    if (confirm(t('messages.deleteConfirm'))) {
-      await deleteMutation.mutateAsync(user.id);
-    }
+    await deleteMutation.mutateAsync(user.id);
   };
 
   // Handle edit
@@ -83,6 +91,11 @@ export default function UserDetailDialog({
   };
 
   if (!user) return null;
+
+  // Get display name based on locale
+  const getDisplayName = () => {
+    return (locale === 'ar' && user.arabic_name) ? user.arabic_name : user.full_name;
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -107,10 +120,10 @@ export default function UserDetailDialog({
           {/* User Header Section */}
           <div className="flex items-center gap-4 p-4 bg-gradient-to-r from-[#8B2635]/10 to-[#D4AF37]/10 rounded-lg">
             <div className="h-20 w-20 rounded-full bg-[#8B2635] flex items-center justify-center text-white text-3xl font-bold">
-              {user.full_name.charAt(0).toUpperCase()}
+              {getDisplayName().charAt(0).toUpperCase()}
             </div>
             <div className="flex-1">
-              <h3 className="text-2xl font-bold text-gray-900">{user.full_name}</h3>
+              <h3 className="text-2xl font-bold text-gray-900">{getDisplayName()}</h3>
               <p className="text-gray-600 flex items-center gap-2 mt-1">
                 <Mail className="w-4 h-4" />
                 {user.email}
@@ -133,7 +146,7 @@ export default function UserDetailDialog({
           <div>
             <h4 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
               <User className="w-5 h-5 text-[#8B2635]" />
-              Personal Information
+              {t('sections.personalInfo')}
             </h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Full Name */}
@@ -141,7 +154,7 @@ export default function UserDetailDialog({
                 <label className="text-sm font-medium text-gray-500">
                   {t('form.fullName')}
                 </label>
-                <p className="text-base text-gray-900">{user.full_name}</p>
+                <p className="text-base text-gray-900">{getDisplayName()}</p>
               </div>
 
               {/* Email */}
@@ -162,7 +175,7 @@ export default function UserDetailDialog({
                 </label>
                 <p className="text-base text-gray-900 flex items-center gap-2">
                   <Phone className="w-4 h-4 text-gray-400" />
-                  {user.phone || 'N/A'}
+                  {user.phone || tc('notAvailable')}
                 </p>
               </div>
 
@@ -173,7 +186,7 @@ export default function UserDetailDialog({
                 </label>
                 <p className="text-base text-gray-900 flex items-center gap-2">
                   <MapPin className="w-4 h-4 text-gray-400" />
-                  {user.address || 'N/A'}
+                  {user.address || tc('notAvailable')}
                 </p>
               </div>
             </div>
@@ -185,7 +198,7 @@ export default function UserDetailDialog({
           <div>
             <h4 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
               <Shield className="w-5 h-5 text-[#8B2635]" />
-              Account Information
+              {t('sections.accountInfo')}
             </h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Role */}
@@ -195,9 +208,7 @@ export default function UserDetailDialog({
                 </label>
                 <div>
                   <Badge variant="outline" className="text-base">
-                    {user.role === 'admin' && t('roles.admin')}
-                    {user.role === 'librarian' && t('roles.librarian')}
-                    {user.role === 'patron' && t('roles.patron')}
+                    {t(`roles.${user.role}`)}
                   </Badge>
                 </div>
               </div>
@@ -216,7 +227,7 @@ export default function UserDetailDialog({
                         : 'bg-green-100 text-green-800'
                     }
                   >
-                    {user.user_type}
+                    {user.user_type === 'Staff' ? tc('staff') : user.user_type === 'Patron' ? t('form.patron') : user.user_type}
                   </Badge>
                 </div>
               </div>
@@ -266,7 +277,7 @@ export default function UserDetailDialog({
                 <div className="space-y-1">
                   <label className="text-sm font-medium text-gray-500 flex items-center gap-2">
                     <Calendar className="w-4 h-4" />
-                    Last Updated
+                    {t('form.lastUpdated')}
                   </label>
                   <p className="text-base text-gray-900">
                     {new Date(user.updated_at).toLocaleDateString(
@@ -285,7 +296,7 @@ export default function UserDetailDialog({
 
               {/* User ID */}
               <div className="space-y-1">
-                <label className="text-sm font-medium text-gray-500">User ID</label>
+                <label className="text-sm font-medium text-gray-500">{t('form.userId')}</label>
                 <p className="text-base text-gray-900 font-mono text-xs">{user.id}</p>
               </div>
             </div>
@@ -298,7 +309,7 @@ export default function UserDetailDialog({
               variant="outline"
               onClick={() => onOpenChange(false)}
             >
-              Close
+              {tc('close')}
             </Button>
             {onEdit && (
               <Button
@@ -323,6 +334,15 @@ export default function UserDetailDialog({
           </div>
         </div>
       </DialogContent>
+
+      {/* Delete Confirmation Dialog */}
+      <DeleteUserDialog
+        isOpen={deleteDialogOpen}
+        onClose={() => setDeleteDialogOpen(false)}
+        user={user}
+        onConfirm={handleConfirmDelete}
+        isDeleting={deleteMutation.isPending}
+      />
     </Dialog>
   );
 }

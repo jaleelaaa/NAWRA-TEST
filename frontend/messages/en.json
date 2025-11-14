@@ -11,7 +11,10 @@
     "user": "User",
     "staff": "Staff",
     "defaultUser": "User",
-    "defaultRole": "Staff"
+    "defaultRole": "Staff",
+    "save": "Save",
+    "saving": "Saving...",
+    "cancel": "Cancel"
   },
   "nav": {
     "dashboard": "Dashboard",
@@ -313,6 +316,14 @@
       "reviews": "reviews",
       "newArrival": "NEW"
     },
+    "edit": "Edit",
+    "delete": "Delete",
+    "noLocation": "No location",
+    "uncategorized": "Uncategorized",
+    "deleteConfirmTitle": "Delete Book",
+    "deleteConfirmMessage": "Are you sure you want to delete '{title}'? This action cannot be undone.",
+    "errorLoading": "Error loading books",
+    "retry": "Retry",
     "actions": {
       "addToCart": "Add to Cart",
       "borrow": "Borrow",
@@ -561,5 +572,164 @@
     "loading": "Loading reports...",
     "error": "Failed to load reports",
     "retry": "Retry"
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Manage your preferences and configurations",
+    "tabs": {
+      "general": "General",
+      "appearance": "Appearance",
+      "notifications": "Notifications",
+      "security": "Security",
+      "system": "System"
+    },
+    "general": {
+      "profile": {
+        "title": "Profile Information",
+        "description": "Manage your personal information and display preferences",
+        "displayName": "Display Name",
+        "displayNameDesc": "This name will be shown across the application",
+        "displayNamePlaceholder": "Enter your preferred name"
+      },
+      "language": {
+        "title": "Language & Region",
+        "description": "Configure language, date, and time formats",
+        "interface": "Interface Language",
+        "interfaceDesc": "Choose your preferred language for the application",
+        "dateFormat": "Date Format",
+        "timeFormat": "Time Format"
+      },
+      "defaults": {
+        "title": "Default Preferences",
+        "description": "Set your default views and preferences",
+        "landingPage": "Default Landing Page",
+        "landingPageDesc": "Page to show when you log in",
+        "itemsPerPage": "Items Per Page",
+        "itemsPerPageDesc": "Number of items to display in lists",
+        "viewMode": "Default View Mode",
+        "viewModeDesc": "Preferred view for displaying lists"
+      },
+      "pages": {
+        "dashboard": "Dashboard",
+        "catalog": "Catalog",
+        "circulation": "Circulation",
+        "reports": "Reports"
+      },
+      "viewModes": {
+        "grid": "Grid View",
+        "list": "List View",
+        "table": "Table View"
+      }
+    },
+    "appearance": {
+      "theme": {
+        "title": "Theme",
+        "description": "Customize the application's visual appearance",
+        "label": "Color Scheme",
+        "light": "Light",
+        "dark": "Dark",
+        "auto": "Auto (System)"
+      },
+      "layout": {
+        "title": "Layout & Density",
+        "description": "Adjust spacing and layout preferences"
+      },
+      "density": {
+        "label": "Interface Density",
+        "compact": "Compact",
+        "default": "Default",
+        "comfortable": "Comfortable"
+      },
+      "animation": {
+        "label": "Animation Speed",
+        "none": "None",
+        "reduced": "Reduced",
+        "default": "Default",
+        "fast": "Fast"
+      },
+      "breadcrumbs": {
+        "label": "Show Breadcrumbs",
+        "description": "Display navigation breadcrumbs at the top of pages"
+      },
+      "typography": {
+        "title": "Typography",
+        "description": "Adjust text size and appearance"
+      },
+      "fontSize": {
+        "label": "Font Size",
+        "small": "Small",
+        "medium": "Medium",
+        "large": "Large",
+        "extraLarge": "Extra Large"
+      }
+    },
+    "notifications": {
+      "email": {
+        "title": "Email Notifications",
+        "description": "Configure what updates you receive via email",
+        "systemAnnouncements": "System Announcements",
+        "dueDateReminders": "Due Date Reminders",
+        "overdueNotifications": "Overdue Notifications",
+        "newRequests": "New Circulation Requests"
+      },
+      "inApp": {
+        "title": "In-App Notifications",
+        "description": "Manage notifications within the application",
+        "enabled": "Enable In-App Notifications",
+        "sound": "Notification Sounds",
+        "badges": "Badge Counters",
+        "position": "Notification Position",
+        "autoDismiss": "Auto-Dismiss Time"
+      },
+      "position": {
+        "topRight": "Top Right",
+        "topCenter": "Top Center",
+        "bottomRight": "Bottom Right"
+      }
+    },
+    "security": {
+      "authentication": {
+        "title": "Authentication",
+        "description": "Manage your account security settings"
+      },
+      "twoFactor": {
+        "label": "Two-Factor Authentication",
+        "description": "Add an extra layer of security to your account"
+      },
+      "session": {
+        "title": "Session Management",
+        "description": "Control your active sessions and timeouts",
+        "timeout": "Session Timeout",
+        "timeoutDesc": "Automatically log out after period of inactivity"
+      }
+    },
+    "system": {
+      "data": {
+        "title": "Data Management",
+        "description": "Export and manage your data",
+        "export": "Export My Data"
+      },
+      "cache": {
+        "title": "Cache & Performance",
+        "description": "Clear cached data to improve performance",
+        "clear": "Clear Cache",
+        "cleared": "Cache Cleared",
+        "clearedDesc": "Application cache has been cleared successfully"
+      },
+      "export": {
+        "title": "Data Exported",
+        "description": "Your data export has been prepared"
+      }
+    },
+    "footer": {
+      "unsavedChanges": "You have unsaved changes",
+      "allSaved": "All changes saved",
+      "resetDefaults": "Reset to Defaults"
+    },
+    "reset": {
+      "title": "Reset Settings",
+      "description": "Are you sure you want to reset all settings to their default values? This action cannot be undone.",
+      "confirm": "Reset to Defaults"
+    }
   }
 }

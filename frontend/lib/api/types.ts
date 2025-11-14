@@ -40,6 +40,7 @@ export interface User {
   id: string;
   email: string;
   full_name: string;
+  arabic_name?: string;
   role: string;
   user_type: string;
   is_active: boolean;
@@ -90,6 +91,7 @@ export interface UserFilters extends PaginationParams, SortParams {
 export interface CreateUserRequest {
   email: string;
   full_name: string;
+  arabic_name?: string;
   password: string;
   role_id?: string;
   user_type: 'Staff' | 'Patron';
@@ -99,6 +101,7 @@ export interface CreateUserRequest {
 
 export interface UpdateUserRequest {
   full_name?: string;
+  arabic_name?: string;
   email?: string;
   role_id?: string;
   phone?: string;

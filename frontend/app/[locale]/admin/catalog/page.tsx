@@ -1,35 +1,162 @@
 "use client"
 
-import { useState, useMemo } from "react"
-import { useTranslations } from "next-intl"
+import { useState, useEffect } from "react"
+import { useTranslations, useLocale } from "next-intl"
 import { Button } from "@/components/ui/button"
-import { Plus, Upload, Download } from "lucide-react"
+import { Plus, Upload, Download, AlertCircle } from "lucide-react"
 import { StatsCards } from "@/components/books/StatsCards"
 import { SearchAndFilters } from "@/components/books/SearchAndFilters"
 import { BookCard } from "@/components/books/BookCard"
-import { OMANI_BOOKS, getCategories, getBooksStats, filterBooks } from "@/lib/data/books"
+import { BooksSkeleton } from "@/components/books/BooksSkeleton"
+import { BookFormModal } from "@/components/books/BookFormModal"
+import { useBooks, useBookStatistics, useCategories, useDeleteBook } from "@/hooks/useBooks"
+import type { BookFilters, BookResponse } from "@/lib/types/books"
+import AdminLayout from "@/components/AdminLayout"
+import { Pagination } from "@/components/Pagination"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
 
 export default function CatalogPage() {
   const t = useTranslations("books")
-  const [searchTerm, setSearchTerm] = useState("")
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
-  const [selectedStatus, setSelectedStatus] = useState<string | null>(null)
+  const locale = useLocale()
+
+  // Filters state
+  const [filters, setFilters] = useState<BookFilters>({
+    page: 1,
+    page_size: 12,
+    search: "",
+    category_id: undefined,
+    status: undefined,
+  })
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
 
-  // Get statistics
-  const stats = getBooksStats()
+  // Modal state
+  const [showBookModal, setShowBookModal] = useState(false)
+  const [selectedBook, setSelectedBook] = useState<BookResponse | null>(null)
+  const [modalMode, setModalMode] = useState<'create' | 'edit'>('create')
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false)
+  const [bookToDelete, setBookToDelete] = useState<BookResponse | null>(null)
 
-  // Get unique categories
-  const categories = getCategories()
+  // Fetch data using React Query hooks
+  const { data: booksData, isLoading: booksLoading, error: booksError, refetch: refetchBooks } = useBooks(filters)
+  const { data: statistics, isLoading: statsLoading } = useBookStatistics()
+  const { data: categoriesData, isLoading: categoriesLoading } = useCategories(true)
+  const deleteBook = useDeleteBook()
 
-  // Filter books based on search and filters
-  const filteredBooks = useMemo(() => {
-    return filterBooks(OMANI_BOOKS, searchTerm, selectedCategory, selectedStatus)
-  }, [searchTerm, selectedCategory, selectedStatus])
+  // Extract data from responses
+  const books = booksData?.items || []
+  const totalBooks = booksData?.meta?.total || 0
+  const totalPages = booksData?.meta?.total_pages || 0
+  const categories = categoriesData?.items || []
+
+  // Reset to page 1 when filters change (except page itself)
+  useEffect(() => {
+    setFilters(prev => ({ ...prev, page: 1 }))
+  }, [filters.search, filters.category_id, filters.status, filters.page_size])
+
+  // Handle filter changes
+  const handleSearchChange = (search: string) => {
+    setFilters(prev => ({ ...prev, search, page: 1 }))
+  }
+
+  const handleCategoryChange = (categoryId: string | null) => {
+    setFilters(prev => ({
+      ...prev,
+      category_id: categoryId || undefined,
+      page: 1
+    }))
+  }
+
+  const handleStatusChange = (status: string | null) => {
+    setFilters(prev => ({
+      ...prev,
+      status: status as any || undefined,
+      page: 1
+    }))
+  }
+
+  // Handle page change with scroll to top
+  const handlePageChange = (page: number) => {
+    setFilters(prev => ({ ...prev, page }))
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  // Handle items per page change
+  const handleItemsPerPageChange = (items: number) => {
+    setFilters(prev => ({ ...prev, page_size: items, page: 1 }))
+  }
+
+  // CRUD handlers
+  const handleAddBook = () => {
+    setSelectedBook(null)
+    setModalMode('create')
+    setShowBookModal(true)
+  }
+
+  const handleEditBook = (book: BookResponse) => {
+    setSelectedBook(book)
+    setModalMode('edit')
+    setShowBookModal(true)
+  }
+
+  const handleDeleteClick = (book: BookResponse) => {
+    setBookToDelete(book)
+    setShowDeleteDialog(true)
+  }
+
+  const handleDeleteConfirm = async () => {
+    if (bookToDelete) {
+      await deleteBook.mutateAsync(bookToDelete.id)
+      setShowDeleteDialog(false)
+      setBookToDelete(null)
+    }
+  }
+
+  const handleCloseModal = () => {
+    setShowBookModal(false)
+    setSelectedBook(null)
+  }
+
+  // Show loading skeleton
+  if (booksLoading || statsLoading || categoriesLoading) {
+    return (
+      <AdminLayout>
+        <BooksSkeleton />
+      </AdminLayout>
+    )
+  }
+
+  // Show error state
+  if (booksError) {
+    return (
+      <AdminLayout>
+        <div className="space-y-6">
+          <Alert variant="destructive">
+            <AlertCircle className="h-4 w-4" />
+            <AlertDescription>
+              {t("errorLoading")} {(booksError as any)?.message || "Unknown error"}
+            </AlertDescription>
+          </Alert>
+          <Button onClick={() => refetchBooks()}>
+            {t("retry")}
+          </Button>
+        </div>
+      </AdminLayout>
+    )
+  }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
-      <div className="container mx-auto px-4 py-8 max-w-7xl">
+    <AdminLayout>
+      <div className="space-y-6">
         {/* Header Section */}
         <div className="mb-8">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -56,7 +183,10 @@ export default function CatalogPage() {
                 <Download className="h-4 w-4" />
                 {t("export")}
               </Button>
-              <Button className="gap-2 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground shadow-md hover:shadow-lg transition-all">
+              <Button
+                onClick={handleAddBook}
+                className="gap-2 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground shadow-md hover:shadow-lg transition-all"
+              >
                 <Plus className="h-4 w-4" />
                 {t("addBook")}
               </Button>
@@ -66,18 +196,18 @@ export default function CatalogPage() {
 
         {/* Statistics Cards */}
         <div className="mb-8">
-          <StatsCards stats={stats} />
+          <StatsCards stats={statistics} />
         </div>
 
         {/* Search and Filters */}
         <div className="mb-8">
           <SearchAndFilters
-            searchTerm={searchTerm}
-            onSearchChange={setSearchTerm}
-            selectedCategory={selectedCategory}
-            onCategoryChange={setSelectedCategory}
-            selectedStatus={selectedStatus}
-            onStatusChange={setSelectedStatus}
+            searchTerm={filters.search || ""}
+            onSearchChange={handleSearchChange}
+            selectedCategory={filters.category_id || null}
+            onCategoryChange={handleCategoryChange}
+            selectedStatus={filters.status || null}
+            onStatusChange={handleStatusChange}
             categories={categories}
             viewMode={viewMode}
             onViewModeChange={setViewMode}
@@ -87,23 +217,47 @@ export default function CatalogPage() {
         {/* Results Count */}
         <div className="mb-6">
           <p className="text-sm text-muted-foreground font-medium">
-            {t("showingBooks", { count: filteredBooks.length, total: OMANI_BOOKS.length })}
+            {t("showingBooks", {
+              count: books.length,
+              total: totalBooks
+            })}
           </p>
         </div>
 
         {/* Books Grid/List */}
-        {filteredBooks.length > 0 ? (
-          <div
-            className={
-              viewMode === "grid"
-                ? "grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-                : "flex flex-col gap-4"
-            }
-          >
-            {filteredBooks.map((book) => (
-              <BookCard key={book.id} book={book} viewMode={viewMode} />
-            ))}
-          </div>
+        {books.length > 0 ? (
+          <>
+            <div
+              className={
+                viewMode === "grid"
+                  ? "grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+                  : "flex flex-col gap-4"
+              }
+            >
+              {books.map((book) => (
+                <BookCard
+                  key={book.id}
+                  book={book}
+                  viewMode={viewMode}
+                  onEdit={handleEditBook}
+                  onDelete={handleDeleteClick}
+                />
+              ))}
+            </div>
+
+            {/* Pagination */}
+            {totalPages > 0 && (
+              <Pagination
+                currentPage={filters.page || 1}
+                totalPages={totalPages}
+                itemsPerPage={filters.page_size || 12}
+                totalItems={totalBooks}
+                onPageChange={handlePageChange}
+                onItemsPerPageChange={handleItemsPerPageChange}
+                itemType="books"
+              />
+            )}
+          </>
         ) : (
           <div className="flex flex-col items-center justify-center py-16 text-center">
             <div className="mb-4 rounded-full bg-muted p-6">
@@ -126,6 +280,37 @@ export default function CatalogPage() {
           </div>
         )}
       </div>
-    </div>
+
+      {/* Book Form Modal */}
+      <BookFormModal
+        open={showBookModal}
+        onClose={handleCloseModal}
+        book={selectedBook}
+        mode={modalMode}
+      />
+
+      {/* Delete Confirmation Dialog */}
+      <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>{t("deleteConfirmTitle")}</AlertDialogTitle>
+            <AlertDialogDescription>
+              {t("deleteConfirmMessage", {
+                title: bookToDelete?.title || "",
+              })}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>{t("cancel")}</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDeleteConfirm}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              {t("delete")}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </AdminLayout>
   )
 }

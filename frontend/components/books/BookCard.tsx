@@ -3,16 +3,34 @@
 import { useState } from "react"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Star, MapPin, Package, Eye, Heart, MoreVertical, Sparkles } from "lucide-react"
+import {
+  Star,
+  MapPin,
+  Package,
+  Eye,
+  Heart,
+  MoreVertical,
+  Sparkles,
+  Pencil,
+  Trash2,
+} from "lucide-react"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { useTranslations, useLocale } from "next-intl"
-import { BookData } from "@/lib/data/books"
+import type { BookResponse } from "@/lib/types/books"
 
 interface BookCardProps {
-  book: BookData
+  book: BookResponse
   viewMode: "grid" | "list"
+  onEdit?: (book: BookResponse) => void
+  onDelete?: (book: BookResponse) => void
 }
 
-export function BookCard({ book, viewMode }: BookCardProps) {
+export function BookCard({ book, viewMode, onEdit, onDelete }: BookCardProps) {
   const [isHovered, setIsHovered] = useState(false)
   const [isFavorite, setIsFavorite] = useState(false)
   const t = useTranslations("books")
@@ -42,8 +60,20 @@ export function BookCard({ book, viewMode }: BookCardProps) {
   }
 
   // Get the appropriate title and author based on locale
-  const displayTitle = locale === "ar" ? book.titleAr : book.title
-  const displayAuthor = locale === "ar" ? book.authorAr : book.author
+  const displayTitle = locale === "ar" && book.title_ar ? book.title_ar : book.title
+  const displayAuthor = locale === "ar" && book.author_ar ? book.author_ar : book.author
+
+  // Get category name based on locale
+  const categoryName = book.category
+    ? locale === "ar" && book.category.name_ar
+      ? book.category.name_ar
+      : book.category.name
+    : t("uncategorized")
+
+  // Check if book is new arrival (created within last 30 days)
+  const isNewArrival = book.created_at
+    ? new Date().getTime() - new Date(book.created_at).getTime() < 30 * 24 * 60 * 60 * 1000
+    : false
 
   if (viewMode === "list") {
     return (
@@ -51,7 +81,7 @@ export function BookCard({ book, viewMode }: BookCardProps) {
         {/* Thumbnail */}
         <div className="flex-shrink-0">
           <img
-            src={book.coverImage || "/placeholder.svg"}
+            src={book.cover_image_url || "/placeholder.svg"}
             alt={displayTitle}
             className="h-24 w-16 rounded object-cover shadow-md"
           />
@@ -67,10 +97,10 @@ export function BookCard({ book, viewMode }: BookCardProps) {
           <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
             <span className="flex items-center gap-1">
               <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-              {book.rating} ({book.reviewCount})
+              {book.rating || 0} ({book.review_count || 0})
             </span>
-            <span>{book.category}</span>
-            <span>{book.publicationYear}</span>
+            <span>{categoryName}</span>
+            <span>{book.publication_year}</span>
             <span className={`font-medium capitalize px-2 py-0.5 rounded-full ${getStatusBadgeStyles(book.status)}`}>
               {tStatus(book.status)}
             </span>
@@ -80,13 +110,13 @@ export function BookCard({ book, viewMode }: BookCardProps) {
             <div className="flex gap-3 text-xs text-muted-foreground">
               <span className="flex items-center gap-1">
                 <MapPin className="h-3 w-3" />
-                {book.shelfLocation}
+                {book.shelf_location || t("noLocation")}
               </span>
               <span
-                className={`flex items-center gap-1 font-medium ${getStockColor(book.copies.available, book.copies.total)}`}
+                className={`flex items-center gap-1 font-medium ${getStockColor(book.available_quantity || 0, book.quantity || 0)}`}
               >
                 <Package className="h-3 w-3" />
-                {book.copies.available}/{book.copies.total}
+                {book.available_quantity || 0}/{book.quantity || 0}
               </span>
             </div>
             <div className="flex gap-1">
@@ -99,9 +129,29 @@ export function BookCard({ book, viewMode }: BookCardProps) {
                   onClick={() => setIsFavorite(!isFavorite)}
                 />
               </Button>
-              <Button size="sm" variant="ghost" className="h-8">
-                <MoreVertical className="h-4 w-4" />
-              </Button>
+              {(onEdit || onDelete) && (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button size="sm" variant="ghost" className="h-8">
+                      <MoreVertical className="h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    {onEdit && (
+                      <DropdownMenuItem onClick={() => onEdit(book)}>
+                        <Pencil className="mr-2 h-4 w-4" />
+                        {t("edit")}
+                      </DropdownMenuItem>
+                    )}
+                    {onDelete && (
+                      <DropdownMenuItem onClick={() => onDelete(book)} className="text-destructive">
+                        <Trash2 className="mr-2 h-4 w-4" />
+                        {t("delete")}
+                      </DropdownMenuItem>
+                    )}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              )}
             </div>
           </div>
         </div>
@@ -118,7 +168,7 @@ export function BookCard({ book, viewMode }: BookCardProps) {
     >
       {/* Book Cover Container */}
       <div className="relative overflow-hidden bg-slate-200 aspect-[2/3]">
-        {book.isNewArrival && (
+        {isNewArrival && (
           <div className="absolute right-2 top-2 z-20 flex items-center gap-1 rounded-full bg-gradient-to-r from-amber-400 to-orange-500 px-3 py-1.5 text-xs font-bold text-white shadow-lg">
             <Sparkles className="h-3 w-3 animate-pulse" />
             {tCard("newArrival")}
@@ -126,7 +176,7 @@ export function BookCard({ book, viewMode }: BookCardProps) {
         )}
 
         <img
-          src={book.coverImage || "/placeholder.svg"}
+          src={book.cover_image_url || "/placeholder.svg"}
           alt={displayTitle}
           className="aspect-[2/3] w-full object-cover transition-transform duration-500 group-hover:scale-110"
         />
@@ -152,12 +202,6 @@ export function BookCard({ book, viewMode }: BookCardProps) {
             </div>
           </div>
         )}
-
-        {book.status === "borrowed" && book.dueDate && (
-          <div className="absolute bottom-2 left-2 rounded-lg bg-blue-600/95 px-3 py-1 text-xs font-semibold text-white shadow-md backdrop-blur-sm">
-            {tCard("due")}: {book.dueDate}
-          </div>
-        )}
       </div>
 
       {/* Card Content */}
@@ -169,10 +213,10 @@ export function BookCard({ book, viewMode }: BookCardProps) {
             {tStatus(book.status)}
           </span>
           <span className="inline-block rounded-full bg-purple-100 px-2.5 py-1 text-xs font-semibold text-purple-700">
-            {book.category}
+            {categoryName}
           </span>
           <span className="inline-block rounded-full bg-indigo-100 px-2.5 py-1 text-xs font-semibold text-indigo-700">
-            {book.language.toUpperCase()}
+            {book.language?.toUpperCase() || "N/A"}
           </span>
         </div>
 
@@ -193,14 +237,14 @@ export function BookCard({ book, viewMode }: BookCardProps) {
               <Star
                 key={i}
                 className={`h-3.5 w-3.5 transition-colors ${
-                  i < Math.round(book.rating) ? "fill-amber-400 text-amber-400" : "text-slate-300"
+                  i < Math.round(book.rating || 0) ? "fill-amber-400 text-amber-400" : "text-slate-300"
                 }`}
               />
             ))}
           </div>
-          <span className="font-bold text-xs text-foreground">{book.rating}</span>
+          <span className="font-bold text-xs text-foreground">{book.rating || 0}</span>
           <span className="text-xs text-muted-foreground">
-            ({book.reviewCount} {tCard("reviews")})
+            ({book.review_count || 0} {tCard("reviews")})
           </span>
         </div>
 
@@ -208,14 +252,14 @@ export function BookCard({ book, viewMode }: BookCardProps) {
         <div className="space-y-1.5 pt-2 border-t border-border/50">
           <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
             <MapPin className="h-3.5 w-3.5 text-primary/60" />
-            <span className="font-medium">{book.shelfLocation}</span>
+            <span className="font-medium">{book.shelf_location || t("noLocation")}</span>
           </div>
           <div
-            className={`flex items-center gap-1.5 text-xs font-semibold ${getStockColor(book.copies.available, book.copies.total)}`}
+            className={`flex items-center gap-1.5 text-xs font-semibold ${getStockColor(book.available_quantity || 0, book.quantity || 0)}`}
           >
             <Package className="h-3.5 w-3.5" />
             <span>
-              {book.copies.available}/{book.copies.total} {tCard("copies")}
+              {book.available_quantity || 0}/{book.quantity || 0} {tCard("copies")}
             </span>
           </div>
         </div>
@@ -228,9 +272,29 @@ export function BookCard({ book, viewMode }: BookCardProps) {
           >
             {tCard("details")}
           </Button>
-          <Button size="icon" variant="ghost" className="h-8 w-8 hover:bg-secondary/10 transition-all">
-            <MoreVertical className="h-4 w-4" />
-          </Button>
+          {(onEdit || onDelete) && (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button size="icon" variant="ghost" className="h-8 w-8 hover:bg-secondary/10 transition-all">
+                  <MoreVertical className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                {onEdit && (
+                  <DropdownMenuItem onClick={() => onEdit(book)}>
+                    <Pencil className="mr-2 h-4 w-4" />
+                    {t("edit")}
+                  </DropdownMenuItem>
+                )}
+                {onDelete && (
+                  <DropdownMenuItem onClick={() => onDelete(book)} className="text-destructive">
+                    <Trash2 className="mr-2 h-4 w-4" />
+                    {t("delete")}
+                  </DropdownMenuItem>
+                )}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          )}
         </div>
       </div>
     </Card>

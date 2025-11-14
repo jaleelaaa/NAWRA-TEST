@@ -11,7 +11,10 @@
     "user": "مستخدم",
     "staff": "موظف",
     "defaultUser": "مستخدم",
-    "defaultRole": "موظف"
+    "defaultRole": "موظف",
+    "save": "حفظ",
+    "saving": "جارٍ الحفظ...",
+    "cancel": "إلغاء"
   },
   "nav": {
     "dashboard": "لوحة التحكم",
@@ -313,6 +316,14 @@
       "reviews": "تقييمات",
       "newArrival": "جديد"
     },
+    "edit": "تعديل",
+    "delete": "حذف",
+    "noLocation": "لا يوجد موقع",
+    "uncategorized": "غير مصنف",
+    "deleteConfirmTitle": "حذف الكتاب",
+    "deleteConfirmMessage": "هل أنت متأكد من حذف '{title}'؟ لا يمكن التراجع عن هذا الإجراء.",
+    "errorLoading": "خطأ في تحميل الكتب",
+    "retry": "إعادة المحاولة",
     "actions": {
       "addToCart": "إضافة إلى السلة",
       "borrow": "استعارة",
@@ -561,5 +572,164 @@
     "loading": "جاري تحميل التقارير...",
     "error": "فشل تحميل التقارير",
     "retry": "إعادة المحاولة"
+  },
+  "settings": {
+    "title": "الإعدادات",
+    "subtitle": "إدارة تفضيلاتك وإعداداتك",
+    "tabs": {
+      "general": "عام",
+      "appearance": "المظهر",
+      "notifications": "الإشعارات",
+      "security": "الأمان",
+      "system": "النظام"
+    },
+    "general": {
+      "profile": {
+        "title": "المعلومات الشخصية",
+        "description": "إدارة معلوماتك الشخصية وتفضيلات العرض",
+        "displayName": "اسم العرض",
+        "displayNameDesc": "سيظهر هذا الاسم عبر التطبيق",
+        "displayNamePlaceholder": "أدخل اسمك المفضل"
+      },
+      "language": {
+        "title": "اللغة والمنطقة",
+        "description": "تكوين اللغة وتنسيقات التاريخ والوقت",
+        "interface": "لغة الواجهة",
+        "interfaceDesc": "اختر لغتك المفضلة للتطبيق",
+        "dateFormat": "تنسيق التاريخ",
+        "timeFormat": "تنسيق الوقت"
+      },
+      "defaults": {
+        "title": "التفضيلات الافتراضية",
+        "description": "تعيين الإعدادات والتفضيلات الافتراضية",
+        "landingPage": "الصفحة الافتراضية",
+        "landingPageDesc": "الصفحة التي تظهر عند تسجيل الدخول",
+        "itemsPerPage": "عدد العناصر في الصفحة",
+        "itemsPerPageDesc": "عدد العناصر المعروضة في القوائم",
+        "viewMode": "وضع العرض الافتراضي",
+        "viewModeDesc": "طريقة العرض المفضلة للقوائم"
+      },
+      "pages": {
+        "dashboard": "لوحة التحكم",
+        "catalog": "الفهرس",
+        "circulation": "الإعارات",
+        "reports": "التقارير"
+      },
+      "viewModes": {
+        "grid": "عرض الشبكة",
+        "list": "عرض القائمة",
+        "table": "عرض الجدول"
+      }
+    },
+    "appearance": {
+      "theme": {
+        "title": "السمة",
+        "description": "تخصيص المظهر المرئي للتطبيق",
+        "label": "نظام الألوان",
+        "light": "فاتح",
+        "dark": "داكن",
+        "auto": "تلقائي (النظام)"
+      },
+      "layout": {
+        "title": "التخطيط والكثافة",
+        "description": "ضبط تفضيلات المسافات والتخطيط"
+      },
+      "density": {
+        "label": "كثافة الواجهة",
+        "compact": "مضغوط",
+        "default": "افتراضي",
+        "comfortable": "مريح"
+      },
+      "animation": {
+        "label": "سرعة الحركة",
+        "none": "بدون",
+        "reduced": "مخفضة",
+        "default": "افتراضي",
+        "fast": "سريع"
+      },
+      "breadcrumbs": {
+        "label": "إظهار مسار التنقل",
+        "description": "عرض مسار التنقل في أعلى الصفحات"
+      },
+      "typography": {
+        "title": "الطباعة",
+        "description": "ضبط حجم ومظهر النص"
+      },
+      "fontSize": {
+        "label": "حجم الخط",
+        "small": "صغير",
+        "medium": "متوسط",
+        "large": "كبير",
+        "extraLarge": "كبير جداً"
+      }
+    },
+    "notifications": {
+      "email": {
+        "title": "إشعارات البريد الإلكتروني",
+        "description": "تكوين التحديثات التي تتلقاها عبر البريد",
+        "systemAnnouncements": "الإعلانات النظامية",
+        "dueDateReminders": "تذكيرات موعد الاستحقاق",
+        "overdueNotifications": "إشعارات التأخير",
+        "newRequests": "طلبات الإعارة الجديدة"
+      },
+      "inApp": {
+        "title": "الإشعارات داخل التطبيق",
+        "description": "إدارة الإشعارات داخل التطبيق",
+        "enabled": "تفعيل الإشعارات",
+        "sound": "أصوات الإشعارات",
+        "badges": "عدادات الشارات",
+        "position": "موضع الإشعار",
+        "autoDismiss": "وقت الإخفاء التلقائي"
+      },
+      "position": {
+        "topRight": "أعلى اليمين",
+        "topCenter": "أعلى الوسط",
+        "bottomRight": "أسفل اليمين"
+      }
+    },
+    "security": {
+      "authentication": {
+        "title": "المصادقة",
+        "description": "إدارة إعدادات أمان حسابك"
+      },
+      "twoFactor": {
+        "label": "المصادقة الثنائية",
+        "description": "إضافة طبقة إضافية من الأمان لحسابك"
+      },
+      "session": {
+        "title": "إدارة الجلسات",
+        "description": "التحكم في جلساتك النشطة والمهلات",
+        "timeout": "مهلة الجلسة",
+        "timeoutDesc": "تسجيل الخروج تلقائياً بعد فترة عدم النشاط"
+      }
+    },
+    "system": {
+      "data": {
+        "title": "إدارة البيانات",
+        "description": "تصدير وإدارة بياناتك",
+        "export": "تصدير بياناتي"
+      },
+      "cache": {
+        "title": "ذاكرة التخزين المؤقت والأداء",
+        "description": "مسح البيانات المخزنة مؤقتاً لتحسين الأداء",
+        "clear": "مسح التخزين المؤقت",
+        "cleared": "تم مسح التخزين المؤقت",
+        "clearedDesc": "تم مسح ذاكرة التخزين المؤقت للتطبيق بنجاح"
+      },
+      "export": {
+        "title": "تم تصدير البيانات",
+        "description": "تم تحضير تصدير بياناتك"
+      }
+    },
+    "footer": {
+      "unsavedChanges": "لديك تغييرات غير محفوظة",
+      "allSaved": "تم حفظ جميع التغييرات",
+      "resetDefaults": "إعادة التعيين إلى الافتراضي"
+    },
+    "reset": {
+      "title": "إعادة تعيين الإعدادات",
+      "description": "هل أنت متأكد من رغبتك في إعادة تعيين جميع الإعدادات إلى قيمها الافتراضية؟ لا يمكن التراجع عن هذا الإجراء.",
+      "confirm": "إعادة التعيين إلى الافتراضي"
+    }
   }
 }

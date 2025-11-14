@@ -1,6 +1,5 @@
 "use client"
 
-import { Card } from "@/components/ui/card"
 import { BookOpen, Check, BookMarked, AlertCircle, TrendingUp, TrendingDown } from "lucide-react"
 import { useTranslations } from "next-intl"
 
@@ -65,55 +64,42 @@ export function StatsCards({ stats }: StatsCardsProps) {
   ]
 
   return (
-    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-8">
       {cards.map((card) => {
         const Icon = card.icon
         const TrendIcon = card.trendPositive ? TrendingUp : TrendingDown
         return (
-          <Card
+          <div
             key={card.title}
-            className={`${card.borderColor} group overflow-hidden bg-gradient-to-br ${card.bgGradient} transition-all duration-500 hover:shadow-xl hover:-translate-y-2 hover:border-l-4 cursor-pointer border-border/50`}
+            className={`${card.borderColor} overflow-hidden bg-gradient-to-br ${card.bgGradient} transition-all duration-300 hover:shadow-xl hover:-translate-y-1 cursor-pointer h-full rounded-2xl p-5`}
           >
-            <div className="relative p-6">
-              {/* Background decoration */}
+            <div className="flex items-start justify-between mb-3">
+              <p className="text-sm font-medium text-gray-600">
+                {card.title}
+              </p>
               <div
-                className={`absolute -right-8 -top-8 h-32 w-32 rounded-full ${card.accentColor} opacity-5 transition-transform duration-500 group-hover:scale-150`}
-              ></div>
-
-              <div className="relative z-10">
-                <div className="flex items-start justify-between mb-4">
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground/70">
-                      {card.title}
-                    </p>
-                    <p className="mt-2 text-4xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent transition-all group-hover:from-foreground group-hover:to-foreground">
-                      {card.value}
-                    </p>
-                  </div>
-                  <div
-                    className={`rounded-lg ${card.accentColor} p-3 shadow-lg transition-transform duration-300 group-hover:scale-110 group-hover:shadow-xl`}
-                  >
-                    <Icon className="h-6 w-6 text-white" />
-                  </div>
-                </div>
-
-                {/* Trend indicator */}
-                <div className="mt-6 flex items-center gap-2 pt-4 border-t border-border/20">
-                  <div className="flex items-center gap-1">
-                    <TrendIcon
-                      className={`h-4 w-4 transition-colors ${card.trendPositive ? "text-emerald-600" : "text-red-600"}`}
-                    />
-                    <span
-                      className={`text-sm font-bold transition-colors ${card.trendPositive ? "text-emerald-600" : "text-red-600"}`}
-                    >
-                      {card.trend}
-                    </span>
-                  </div>
-                  <span className="text-xs text-muted-foreground/70 font-medium">{t("vsLastMonth")}</span>
-                </div>
+                className={`rounded-xl ${card.bgGradient} p-2.5 transition-transform duration-300 hover:scale-110`}
+              >
+                <Icon className={`h-5 w-5 ${card.color}`} />
               </div>
             </div>
-          </Card>
+
+            <p className="text-3xl font-bold text-gray-900 mb-2">
+              {card.value}
+            </p>
+
+            {/* Trend indicator */}
+            <div className="flex items-center gap-1">
+              <TrendIcon
+                className={`h-4 w-4 ${card.trendPositive ? "text-emerald-600" : "text-red-600"}`}
+              />
+              <span
+                className={`text-sm font-medium ${card.trendPositive ? "text-emerald-600" : "text-red-600"}`}
+              >
+                {card.trend}
+              </span>
+            </div>
+          </div>
         )
       })}
     </div>

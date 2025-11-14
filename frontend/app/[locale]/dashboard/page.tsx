@@ -129,7 +129,7 @@ export default async function DashboardPage({ params }: { params: Promise<{ loca
         </section>
 
         {/* Statistics Cards */}
-        <section aria-label={locale === 'ar' ? 'إحصائيات النظام' : 'System statistics'} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+        <section aria-label={locale === 'ar' ? 'إحصائيات النظام' : 'System statistics'} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {stats.map((stat, index) => (
             <StatCard
               key={index}
