@@ -1,16 +1,20 @@
 "use client"
 
 import { useState } from "react"
-import { X, Search } from "lucide-react"
+import { X, Search, Loader2 } from "lucide-react"
 import { useTranslations } from "next-intl"
+import { useCheckoutBook } from "@/hooks/useCirculation"
+import type { CheckoutRequest } from "@/lib/api/types"
 
 interface IssueBookModalProps {
   isOpen: boolean
   onClose: () => void
+  onSuccess?: () => void
 }
 
-export default function IssueBookModal({ isOpen, onClose }: IssueBookModalProps) {
+export default function IssueBookModal({ isOpen, onClose, onSuccess }: IssueBookModalProps) {
   const t = useTranslations("circulation.modals.issue")
+  const checkoutBook = useCheckoutBook()
 
   const [formData, setFormData] = useState({
     userId: "",
@@ -24,6 +28,32 @@ export default function IssueBookModal({ isOpen, onClose }: IssueBookModalProps)
     sendEmail: false,
     printReceipt: false,
   })
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+
+    if (!formData.userId || !formData.bookId) {
+      return
+    }
+
+    // Calculate due days from dates
+    const issueDate = new Date(formData.issueDate)
+    const dueDate = new Date(formData.dueDate)
+    const dueDays = Math.ceil((dueDate.getTime() - issueDate.getTime()) / (1000 * 60 * 60 * 24))
+
+    const checkoutData: CheckoutRequest = {
+      book_id: formData.bookId,
+      user_id: formData.userId,
+      due_days: dueDays > 0 ? dueDays : 15,
+    }
+
+    try {
+      await checkoutBook.mutateAsync(checkoutData)
+      onSuccess?.()
+    } catch (error) {
+      // Error is handled by the hook
+    }
+  }
 
   if (!isOpen) return null
 
@@ -131,15 +161,20 @@ export default function IssueBookModal({ isOpen, onClose }: IssueBookModalProps)
           {/* Action Buttons */}
           <div className="flex gap-3 pt-6 border-t border-[#E5E7EB]">
             <button
+              type="button"
               onClick={onClose}
-              className="flex-1 border-2 border-[#E5E7EB] text-[#111827] hover:bg-[#F9FAFB] font-semibold rounded-lg py-2 transition-colors"
+              disabled={checkoutBook.isPending}
+              className="flex-1 border-2 border-[#E5E7EB] text-[#111827] hover:bg-[#F9FAFB] font-semibold rounded-lg py-2 transition-colors disabled:opacity-50"
             >
               {t("cancel")}
             </button>
             <button
-              onClick={onClose}
-              className="flex-1 bg-[#8B1538] hover:bg-[#6B0F2A] text-white font-semibold rounded-lg py-2 transition-colors"
+              type="button"
+              onClick={handleSubmit}
+              disabled={checkoutBook.isPending || !formData.userId || !formData.bookId}
+              className="flex-1 bg-[#8B1538] hover:bg-[#6B0F2A] text-white font-semibold rounded-lg py-2 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
             >
+              {checkoutBook.isPending && <Loader2 className="w-4 h-4 animate-spin" />}
               {t("submit")}
             </button>
           </div>

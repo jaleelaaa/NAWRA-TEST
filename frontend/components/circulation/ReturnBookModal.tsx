@@ -1,32 +1,63 @@
 "use client"
 
-import { useState } from "react"
-import { X, Search, CheckCircle, AlertCircle } from "lucide-react"
+import { useState, useEffect } from "react"
+import { X, Search, CheckCircle, AlertCircle, Loader2 } from "lucide-react"
 import { useTranslations } from "next-intl"
+import { useCheckinBook } from "@/hooks/useCirculation"
+import type { Loan, CheckinRequest } from "@/lib/api/types"
 
 interface ReturnBookModalProps {
   isOpen: boolean
   onClose: () => void
+  loan?: Loan | null
+  onSuccess?: () => void
 }
 
-export default function ReturnBookModal({ isOpen, onClose }: ReturnBookModalProps) {
+export default function ReturnBookModal({ isOpen, onClose, loan, onSuccess }: ReturnBookModalProps) {
   const t = useTranslations("circulation.modals.return")
+  const checkinBook = useCheckinBook()
 
   const [formData, setFormData] = useState({
-    bookId: "",
+    loanId: loan?.id || "",
     condition: "good",
     notes: "",
   })
 
-  // Mock book details - Replace with API call
-  const bookDetails = {
-    title: "Omani History and Development",
-    userName: "Ahmed Al-Balushi",
-    userId: "OM-2024-011",
-    dueDate: "Jan 30, 2025",
-    isOverdue: false,
-    daysOverdue: 0,
-    fineAmount: 0,
+  // Update form when loan prop changes
+  useEffect(() => {
+    if (loan) {
+      setFormData(prev => ({ ...prev, loanId: loan.id }))
+    }
+  }, [loan])
+
+  // Calculate overdue information
+  const bookDetails = loan ? {
+    title: loan.book_title,
+    userName: loan.user_name,
+    userId: loan.user_id,
+    dueDate: new Date(loan.due_date).toLocaleDateString(),
+    isOverdue: loan.status === 'overdue',
+    daysOverdue: loan.status === 'overdue' ? Math.ceil((new Date().getTime() - new Date(loan.due_date).getTime()) / (1000 * 60 * 60 * 24)) : 0,
+    fineAmount: loan.fine_amount || 0,
+  } : null
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+
+    if (!formData.loanId) {
+      return
+    }
+
+    const checkinData: CheckinRequest = {
+      loan_id: formData.loanId,
+    }
+
+    try {
+      await checkinBook.mutateAsync(checkinData)
+      onSuccess?.()
+    } catch (error) {
+      // Error is handled by the hook
+    }
   }
 
   if (!isOpen) return null
@@ -50,25 +81,8 @@ export default function ReturnBookModal({ isOpen, onClose }: ReturnBookModalProp
 
         {/* Body */}
         <div className="p-6 space-y-5">
-          {/* Book ID Input */}
-          <div>
-            <label className="block text-sm font-semibold text-[#111827] mb-2">
-              {t("bookIdLabel")}
-            </label>
-            <div className="relative">
-              <Search className="absolute left-3 top-3 w-5 h-5 text-[#9CA3AF]" />
-              <input
-                type="text"
-                placeholder={t("bookIdPlaceholder")}
-                className="pl-10 pr-4 py-2 border-2 border-[#E5E7EB] rounded-lg w-full focus:border-[#8B1538] focus:outline-none focus:ring-2 focus:ring-[#8B1538]/10"
-                value={formData.bookId}
-                onChange={(e) => setFormData({ ...formData, bookId: e.target.value })}
-              />
-            </div>
-          </div>
-
           {/* Book Details Card */}
-          {formData.bookId && (
+          {bookDetails && (
             <div className="bg-gradient-to-br from-[#F9FAFB] to-[#F3F4F6] border-2 border-[#E5E7EB] rounded-xl p-5 shadow-sm">
               <h3 className="font-bold text-[#111827] mb-4 text-base">{t("bookDetails")}</h3>
               <div className="space-y-3 text-sm">
@@ -163,15 +177,20 @@ export default function ReturnBookModal({ isOpen, onClose }: ReturnBookModalProp
           {/* Action Buttons */}
           <div className="flex gap-3 pt-6 border-t border-[#E5E7EB]">
             <button
+              type="button"
               onClick={onClose}
-              className="flex-1 border-2 border-[#E5E7EB] text-[#111827] hover:bg-[#F9FAFB] font-semibold rounded-lg py-2 transition-colors"
+              disabled={checkinBook.isPending}
+              className="flex-1 border-2 border-[#E5E7EB] text-[#111827] hover:bg-[#F9FAFB] font-semibold rounded-lg py-2 transition-colors disabled:opacity-50"
             >
               {t("cancel")}
             </button>
             <button
-              onClick={onClose}
-              className="flex-1 bg-[#8B1538] hover:bg-[#6B0F2A] text-white font-semibold rounded-lg py-2 transition-colors"
+              type="button"
+              onClick={handleSubmit}
+              disabled={checkinBook.isPending || !formData.loanId}
+              className="flex-1 bg-[#8B1538] hover:bg-[#6B0F2A] text-white font-semibold rounded-lg py-2 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
             >
+              {checkinBook.isPending && <Loader2 className="w-4 h-4 animate-spin" />}
               {t("submit")}
             </button>
           </div>
