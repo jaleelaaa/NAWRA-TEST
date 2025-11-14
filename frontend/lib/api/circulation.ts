@@ -1,220 +1,315 @@
 /**
- * Circulation API Service
+ * Circulation API Client
  *
- * Circulation management API endpoints (loans, returns, reservations, fines)
+ * API client for circulation management endpoints
  */
 
-import apiClient from './client';
-import {
-  Loan,
-  Reservation,
-  Fine,
+import { apiClient } from './client'
+import type {
+  CirculationRecord,
+  CirculationCreate,
+  CirculationReturn,
+  CirculationUpdate,
+  CirculationRenew,
   CirculationFilters,
-  CheckoutRequest,
-  CheckinRequest,
-  RenewRequest,
-  ReservationRequest,
-  PaginatedResponse,
-} from './types';
+  CirculationListResponse,
+  CirculationStatistics,
+  CirculationDetailResponse,
+  BulkReturnRequest,
+  BulkRenewRequest,
+  BulkOperationResponse,
+  QuickIssueRequest,
+  QuickIssueResponse,
+  CirculationExportParams,
+} from '../types/circulation'
 
 // ============================================================================
-// Loans/Borrowing
+// Main Circulation Endpoints
 // ============================================================================
 
 /**
- * Get all loans with filters
+ * Get paginated circulation records with optional filters
  */
-export const getLoans = async (
-  filters?: CirculationFilters
-): Promise<PaginatedResponse<Loan>> => {
-  const response = await apiClient.get<PaginatedResponse<Loan>>('/circulation/loans', {
+export async function getCirculationRecords(
+  filters: CirculationFilters = {}
+): Promise<CirculationListResponse> {
+  const { data } = await apiClient.get<CirculationListResponse>('/circulation', {
     params: filters,
-  });
-  return response.data;
-};
+  })
+  return data
+}
 
 /**
- * Get loan by ID
+ * Get single circulation record by ID
  */
-export const getLoanById = async (loanId: string): Promise<Loan> => {
-  const response = await apiClient.get<Loan>(`/circulation/loans/${loanId}`);
-  return response.data;
-};
+export async function getCirculationById(
+  id: string
+): Promise<CirculationDetailResponse> {
+  const { data } = await apiClient.get<CirculationDetailResponse>(`/circulation/${id}`)
+  return data
+}
 
 /**
- * Checkout book (create loan)
+ * Issue a book to a user (create circulation record)
  */
-export const checkoutBook = async (checkoutData: CheckoutRequest): Promise<Loan> => {
-  const response = await apiClient.post<Loan>('/circulation/checkout', checkoutData);
-  return response.data;
-};
+export async function issueBook(
+  issueData: CirculationCreate
+): Promise<CirculationRecord> {
+  const { data} = await apiClient.post<CirculationRecord>('/circulation', issueData)
+  return data
+}
 
 /**
- * Checkin book (return loan)
+ * Quick issue using user/book identifiers (barcode, email, ISBN)
  */
-export const checkinBook = async (checkinData: CheckinRequest): Promise<Loan> => {
-  const response = await apiClient.post<Loan>('/circulation/checkin', checkinData);
-  return response.data;
-};
+export async function quickIssue(
+  quickData: QuickIssueRequest
+): Promise<QuickIssueResponse> {
+  const { data } = await apiClient.post<QuickIssueResponse>(
+    '/circulation/quick-issue',
+    quickData
+  )
+  return data
+}
 
 /**
- * Renew loan
+ * Return a book (complete circulation record)
  */
-export const renewLoan = async (renewData: RenewRequest): Promise<Loan> => {
-  const response = await apiClient.post<Loan>('/circulation/renew', renewData);
-  return response.data;
-};
+export async function returnBook(
+  id: string,
+  returnData: CirculationReturn
+): Promise<CirculationRecord> {
+  const { data } = await apiClient.post<CirculationRecord>(
+    `/circulation/${id}/return`,
+    returnData
+  )
+  return data
+}
 
 /**
- * Get overdue loans
+ * Renew a book loan (extend due date)
  */
-export const getOverdueLoans = async (): Promise<Loan[]> => {
-  const response = await apiClient.get<Loan[]>('/circulation/overdue');
-  return response.data;
-};
+export async function renewBook(
+  id: string,
+  renewData: CirculationRenew
+): Promise<CirculationRecord> {
+  const { data } = await apiClient.post<CirculationRecord>(
+    `/circulation/${id}/renew`,
+    renewData
+  )
+  return data
+}
 
 /**
- * Get user's active loans
+ * Update circulation record
  */
-export const getUserLoans = async (userId: string): Promise<Loan[]> => {
-  const response = await apiClient.get<Loan[]>(`/circulation/users/${userId}/loans`);
-  return response.data;
-};
+export async function updateCirculation(
+  id: string,
+  updateData: CirculationUpdate
+): Promise<CirculationRecord> {
+  const { data } = await apiClient.patch<CirculationRecord>(
+    `/circulation/${id}`,
+    updateData
+  )
+  return data
+}
+
+/**
+ * Delete circulation record
+ */
+export async function deleteCirculation(id: string): Promise<void> {
+  await apiClient.delete(`/circulation/${id}`)
+}
 
 // ============================================================================
-// Reservations/Holds
-// ============================================================================
-
-/**
- * Get all reservations with filters
- */
-export const getReservations = async (
-  filters?: CirculationFilters
-): Promise<PaginatedResponse<Reservation>> => {
-  const response = await apiClient.get<PaginatedResponse<Reservation>>(
-    '/circulation/reservations',
-    {
-      params: filters,
-    }
-  );
-  return response.data;
-};
-
-/**
- * Get reservation by ID
- */
-export const getReservationById = async (reservationId: string): Promise<Reservation> => {
-  const response = await apiClient.get<Reservation>(
-    `/circulation/reservations/${reservationId}`
-  );
-  return response.data;
-};
-
-/**
- * Create reservation
- */
-export const createReservation = async (
-  reservationData: ReservationRequest
-): Promise<Reservation> => {
-  const response = await apiClient.post<Reservation>(
-    '/circulation/reservations',
-    reservationData
-  );
-  return response.data;
-};
-
-/**
- * Cancel reservation
- */
-export const cancelReservation = async (
-  reservationId: string
-): Promise<{ message: string }> => {
-  const response = await apiClient.delete(`/circulation/reservations/${reservationId}`);
-  return response.data;
-};
-
-/**
- * Fulfill reservation (convert to loan)
- */
-export const fulfillReservation = async (reservationId: string): Promise<Loan> => {
-  const response = await apiClient.post<Loan>(
-    `/circulation/reservations/${reservationId}/fulfill`
-  );
-  return response.data;
-};
-
-/**
- * Get user's active reservations
- */
-export const getUserReservations = async (userId: string): Promise<Reservation[]> => {
-  const response = await apiClient.get<Reservation[]>(
-    `/circulation/users/${userId}/reservations`
-  );
-  return response.data;
-};
-
-// ============================================================================
-// Fines
-// ============================================================================
-
-/**
- * Get all fines with filters
- */
-export const getFines = async (
-  filters?: CirculationFilters
-): Promise<PaginatedResponse<Fine>> => {
-  const response = await apiClient.get<PaginatedResponse<Fine>>('/circulation/fines', {
-    params: filters,
-  });
-  return response.data;
-};
-
-/**
- * Get fine by ID
- */
-export const getFineById = async (fineId: string): Promise<Fine> => {
-  const response = await apiClient.get<Fine>(`/circulation/fines/${fineId}`);
-  return response.data;
-};
-
-/**
- * Get user's fines
- */
-export const getUserFines = async (userId: string): Promise<Fine[]> => {
-  const response = await apiClient.get<Fine[]>(`/circulation/users/${userId}/fines`);
-  return response.data;
-};
-
-/**
- * Pay fine
- */
-export const payFine = async (fineId: string): Promise<Fine> => {
-  const response = await apiClient.post<Fine>(`/circulation/fines/${fineId}/pay`);
-  return response.data;
-};
-
-/**
- * Waive fine
- */
-export const waiveFine = async (fineId: string): Promise<Fine> => {
-  const response = await apiClient.post<Fine>(`/circulation/fines/${fineId}/waive`);
-  return response.data;
-};
-
-// ============================================================================
-// Statistics
+// Statistics & Analytics
 // ============================================================================
 
 /**
  * Get circulation statistics
  */
-export const getCirculationStats = async (): Promise<{
-  active_loans: number;
-  overdue_loans: number;
-  pending_reservations: number;
-  unpaid_fines: number;
-  total_fine_amount: number;
-}> => {
-  const response = await apiClient.get('/circulation/stats');
-  return response.data;
-};
+export async function getCirculationStats(): Promise<CirculationStatistics> {
+  const { data } = await apiClient.get<CirculationStatistics>('/circulation/stats')
+  return data
+}
+
+// ============================================================================
+// Filtered Queries
+// ============================================================================
+
+/**
+ * Get all overdue circulation records
+ */
+export async function getOverdueRecords(): Promise<CirculationRecord[]> {
+  const { data } = await apiClient.get<CirculationListResponse>('/circulation', {
+    params: {
+      status: 'overdue',
+      page_size: 1000,
+    },
+  })
+  return data.items
+}
+
+/**
+ * Get circulation records for a specific user
+ */
+export async function getUserCirculation(userId: string): Promise<CirculationRecord[]> {
+  const { data } = await apiClient.get<CirculationListResponse>('/circulation', {
+    params: {
+      user_id: userId,
+      page_size: 1000,
+    },
+  })
+  return data.items
+}
+
+/**
+ * Get circulation history for a specific book
+ */
+export async function getBookCirculation(bookId: string): Promise<CirculationRecord[]> {
+  const { data } = await apiClient.get<CirculationListResponse>('/circulation', {
+    params: {
+      book_id: bookId,
+      page_size: 1000,
+    },
+  })
+  return data.items
+}
+
+// ============================================================================
+// Bulk Operations
+// ============================================================================
+
+/**
+ * Bulk return books
+ */
+export async function bulkReturnBooks(
+  bulkData: BulkReturnRequest
+): Promise<BulkOperationResponse> {
+  const { data } = await apiClient.post<BulkOperationResponse>(
+    '/circulation/bulk-return',
+    bulkData
+  )
+  return data
+}
+
+/**
+ * Bulk renew books
+ */
+export async function bulkRenewBooks(
+  bulkData: BulkRenewRequest
+): Promise<BulkOperationResponse> {
+  const { data } = await apiClient.post<BulkOperationResponse>(
+    '/circulation/bulk-renew',
+    bulkData
+  )
+  return data
+}
+
+// ============================================================================
+// Export
+// ============================================================================
+
+/**
+ * Export circulation records to CSV/Excel/PDF
+ */
+export async function exportCirculation(
+  params: CirculationExportParams
+): Promise<Blob> {
+  const { format = 'csv', ...filterParams } = params
+
+  const { data } = await apiClient.get('/circulation/export', {
+    params: {
+      ...filterParams,
+      format,
+    },
+    responseType: 'blob',
+  })
+
+  return data
+}
+
+// ============================================================================
+// Fines (integrated with circulation records)
+// ============================================================================
+
+/**
+ * Get fines (integrated with circulation records)
+ */
+export async function getFines(): Promise<CirculationRecord[]> {
+  const { data } = await apiClient.get<CirculationListResponse>('/circulation', {
+    params: {
+      page_size: 1000,
+    },
+  })
+  // Filter records with unpaid fines
+  return data.items.filter(
+    (record) => record.fine_amount && record.fine_amount > 0 && !record.fine_paid
+  )
+}
+
+/**
+ * Get user's fines
+ */
+export async function getUserFines(userId: string): Promise<CirculationRecord[]> {
+  const records = await getUserCirculation(userId)
+  return records.filter(
+    (record) => record.fine_amount && record.fine_amount > 0 && !record.fine_paid
+  )
+}
+
+/**
+ * Pay fine (update circulation record)
+ */
+export async function payFine(circulationId: string): Promise<CirculationRecord> {
+  return updateCirculation(circulationId, {
+    fine_paid: true,
+  })
+}
+
+/**
+ * Waive fine (update circulation record)
+ */
+export async function waiveFine(circulationId: string): Promise<CirculationRecord> {
+  return updateCirculation(circulationId, {
+    fine_amount: 0,
+    fine_paid: true,
+  })
+}
+
+// ============================================================================
+// Export all functions
+// ============================================================================
+
+export default {
+  // Main operations
+  getCirculationRecords,
+  getCirculationById,
+  issueBook,
+  quickIssue,
+  returnBook,
+  renewBook,
+  updateCirculation,
+  deleteCirculation,
+
+  // Statistics
+  getCirculationStats,
+
+  // Filtered queries
+  getOverdueRecords,
+  getUserCirculation,
+  getBookCirculation,
+
+  // Bulk operations
+  bulkReturnBooks,
+  bulkRenewBooks,
+
+  // Export
+  exportCirculation,
+
+  // Fines
+  getFines,
+  getUserFines,
+  payFine,
+  waiveFine,
+}
