@@ -834,5 +834,196 @@
       "deleteSuccess": "Preservation record deleted successfully",
       "deleteError": "Failed to delete preservation record"
     }
+  },
+  "barcode": {
+    "title": "Barcode Management",
+    "subtitle": "Generate and manage barcodes for library items",
+    "settings": {
+      "title": "Barcode Settings",
+      "prefix": "Barcode Prefix",
+      "format": "Barcode Format",
+      "autoGenerate": "Auto-Generate",
+      "sequenceLength": "Sequence Length",
+      "showText": "Show Text",
+      "height": "Barcode Height",
+      "width": "Bar Width"
+    },
+    "generate": {
+      "title": "Generate Barcode",
+      "selectBook": "Select Book",
+      "customBarcode": "Custom Barcode",
+      "reason": "Reason for Generation",
+      "autoGenerate": "Auto-Generate",
+      "customValue": "Enter Custom Value"
+    },
+    "scan": {
+      "title": "Scan Barcode",
+      "placeholder": "Enter or scan barcode",
+      "lookup": "Lookup",
+      "found": "Book Found",
+      "notFound": "Book Not Found"
+    },
+    "batch": {
+      "title": "Batch Generate",
+      "selectBooks": "Select Books",
+      "generate": "Generate All",
+      "results": "Generation Results"
+    },
+    "statistics": {
+      "title": "Barcode Statistics",
+      "totalBooks": "Total Books",
+      "withBarcode": "With Barcode",
+      "withoutBarcode": "Without Barcode",
+      "coverage": "Coverage",
+      "nextAvailable": "Next Available"
+    },
+    "messages": {
+      "settingsUpdated": "Barcode settings updated successfully",
+      "settingsError": "Failed to update barcode settings",
+      "generateSuccess": "Barcode generated successfully",
+      "generateError": "Failed to generate barcode",
+      "lookupError": "Failed to lookup barcode",
+      "batchSuccess": "Generated {count} barcodes successfully",
+      "batchPartial": "{failed} barcodes failed to generate",
+      "batchError": "Failed to generate barcodes"
+    }
+  },
+  "audit": {
+    "title": "Audit Logs",
+    "subtitle": "Activity tracking and audit trail",
+    "actions": {
+      "CREATE": "Created",
+      "UPDATE": "Updated",
+      "DELETE": "Deleted",
+      "LOGIN": "Logged In",
+      "LOGOUT": "Logged Out",
+      "ACCESS": "Accessed",
+      "EXPORT": "Exported",
+      "IMPORT": "Imported",
+      "GENERATE": "Generated",
+      "SCAN": "Scanned",
+      "CHECKOUT": "Checked Out",
+      "CHECKIN": "Checked In",
+      "RESERVE": "Reserved",
+      "RENEW": "Renewed"
+    },
+    "entities": {
+      "books": "Books",
+      "users": "Users",
+      "circulation": "Circulation",
+      "preservation": "Preservation",
+      "barcode": "Barcode",
+      "categories": "Categories",
+      "settings": "Settings",
+      "reports": "Reports",
+      "system": "System"
+    },
+    "status": {
+      "success": "Success",
+      "failure": "Failure",
+      "warning": "Warning"
+    },
+    "filters": {
+      "user": "Filter by User",
+      "action": "Filter by Action",
+      "entity": "Filter by Entity",
+      "status": "Filter by Status",
+      "dateRange": "Date Range",
+      "startDate": "Start Date",
+      "endDate": "End Date"
+    },
+    "details": {
+      "user": "User",
+      "action": "Action",
+      "entity": "Entity",
+      "description": "Description",
+      "changes": "Changes",
+      "ipAddress": "IP Address",
+      "userAgent": "User Agent",
+      "timestamp": "Timestamp"
+    },
+    "statistics": {
+      "totalActivities": "Total Activities",
+      "byAction": "By Action",
+      "byEntity": "By Entity",
+      "topUsers": "Top Users",
+      "recentActivity": "Recent Activity"
+    },
+    "userReport": {
+      "title": "User Activity Report",
+      "totalActions": "Total Actions",
+      "actionBreakdown": "Action Breakdown",
+      "dailyActivity": "Daily Activity",
+      "recentActions": "Recent Actions"
+    }
+  },
+  "notifications": {
+    "title": "Notifications",
+    "subtitle": "Email and system notifications",
+    "email": {
+      "send": "Send Email",
+      "to": "To",
+      "subject": "Subject",
+      "body": "Body",
+      "cc": "CC",
+      "bcc": "BCC",
+      "template": "Template",
+      "priority": "Priority",
+      "schedule": "Schedule for Later"
+    },
+    "bulk": {
+      "title": "Bulk Email",
+      "recipients": "Recipients",
+      "addRecipient": "Add Recipient",
+      "totalRecipients": "Total Recipients"
+    },
+    "templates": {
+      "welcome": "Welcome Email",
+      "overdue_item": "Overdue Item Notice",
+      "reservation_ready": "Reservation Ready",
+      "due_soon": "Due Soon Reminder",
+      "fine_notice": "Fine Notice",
+      "password_reset": "Password Reset",
+      "account_created": "Account Created",
+      "inspection_due": "Inspection Due",
+      "restoration_urgent": "Urgent Restoration",
+      "system_maintenance": "System Maintenance"
+    },
+    "priority": {
+      "low": "Low",
+      "normal": "Normal",
+      "high": "High",
+      "urgent": "Urgent"
+    },
+    "automated": {
+      "overdue": "Send Overdue Notifications",
+      "dueSoon": "Send Due Soon Reminders",
+      "inspection": "Send Inspection Reminders",
+      "dryRun": "Dry Run (Preview Only)",
+      "sendImmediately": "Send Immediately"
+    },
+    "statistics": {
+      "totalSent": "Total Sent",
+      "successful": "Successful",
+      "failed": "Failed",
+      "pending": "Pending",
+      "byType": "By Type",
+      "byPriority": "By Priority"
+    },
+    "messages": {
+      "emailSent": "Email sent successfully",
+      "emailError": "Failed to send email",
+      "bulkSuccess": "Sent {count} emails successfully",
+      "bulkPartial": "{failed} emails failed to send",
+      "bulkError": "Failed to send bulk emails",
+      "overdueSuccess": "Sent {count} overdue notifications",
+      "overdueError": "Failed to send overdue notifications",
+      "noOverdue": "No overdue items found",
+      "dueSoonSuccess": "Sent {count} due soon reminders",
+      "dueSoonError": "Failed to send due soon reminders",
+      "noDueSoon": "No items due soon",
+      "inspectionSuccess": "Sent {count} inspection reminders",
+      "inspectionError": "Failed to send inspection reminders"
+    }
   }
 }

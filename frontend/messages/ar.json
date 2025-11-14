@@ -834,5 +834,196 @@
       "deleteSuccess": "تم حذف سجل الحفظ بنجاح",
       "deleteError": "فشل في حذف سجل الحفظ"
     }
+  },
+  "barcode": {
+    "title": "إدارة الباركود",
+    "subtitle": "إنشاء وإدارة الباركود لمواد المكتبة",
+    "settings": {
+      "title": "إعدادات الباركود",
+      "prefix": "بادئة الباركود",
+      "format": "تنسيق الباركود",
+      "autoGenerate": "إنشاء تلقائي",
+      "sequenceLength": "طول التسلسل",
+      "showText": "إظهار النص",
+      "height": "ارتفاع الباركود",
+      "width": "عرض الشريط"
+    },
+    "generate": {
+      "title": "إنشاء باركود",
+      "selectBook": "اختر الكتاب",
+      "customBarcode": "باركود مخصص",
+      "reason": "سبب الإنشاء",
+      "autoGenerate": "إنشاء تلقائي",
+      "customValue": "أدخل قيمة مخصصة"
+    },
+    "scan": {
+      "title": "مسح الباركود",
+      "placeholder": "أدخل أو امسح الباركود",
+      "lookup": "بحث",
+      "found": "تم العثور على الكتاب",
+      "notFound": "لم يتم العثور على الكتاب"
+    },
+    "batch": {
+      "title": "إنشاء دفعة",
+      "selectBooks": "اختر الكتب",
+      "generate": "إنشاء الكل",
+      "results": "نتائج الإنشاء"
+    },
+    "statistics": {
+      "title": "إحصائيات الباركود",
+      "totalBooks": "إجمالي الكتب",
+      "withBarcode": "مع باركود",
+      "withoutBarcode": "بدون باركود",
+      "coverage": "التغطية",
+      "nextAvailable": "التالي المتاح"
+    },
+    "messages": {
+      "settingsUpdated": "تم تحديث إعدادات الباركود بنجاح",
+      "settingsError": "فشل في تحديث إعدادات الباركود",
+      "generateSuccess": "تم إنشاء الباركود بنجاح",
+      "generateError": "فشل في إنشاء الباركود",
+      "lookupError": "فشل في البحث عن الباركود",
+      "batchSuccess": "تم إنشاء {count} باركود بنجاح",
+      "batchPartial": "فشل في إنشاء {failed} باركود",
+      "batchError": "فشل في إنشاء الباركود"
+    }
+  },
+  "audit": {
+    "title": "سجلات التدقيق",
+    "subtitle": "تتبع النشاط ومسار التدقيق",
+    "actions": {
+      "CREATE": "تم الإنشاء",
+      "UPDATE": "تم التحديث",
+      "DELETE": "تم الحذف",
+      "LOGIN": "تسجيل الدخول",
+      "LOGOUT": "تسجيل الخروج",
+      "ACCESS": "تم الوصول",
+      "EXPORT": "تم التصدير",
+      "IMPORT": "تم الاستيراد",
+      "GENERATE": "تم الإنشاء",
+      "SCAN": "تم المسح",
+      "CHECKOUT": "تم الإعارة",
+      "CHECKIN": "تم الإرجاع",
+      "RESERVE": "تم الحجز",
+      "RENEW": "تم التجديد"
+    },
+    "entities": {
+      "books": "الكتب",
+      "users": "المستخدمون",
+      "circulation": "الإعارة",
+      "preservation": "الحفظ",
+      "barcode": "الباركود",
+      "categories": "الفئات",
+      "settings": "الإعدادات",
+      "reports": "التقارير",
+      "system": "النظام"
+    },
+    "status": {
+      "success": "نجح",
+      "failure": "فشل",
+      "warning": "تحذير"
+    },
+    "filters": {
+      "user": "تصفية حسب المستخدم",
+      "action": "تصفية حسب الإجراء",
+      "entity": "تصفية حسب الكيان",
+      "status": "تصفية حسب الحالة",
+      "dateRange": "نطاق التاريخ",
+      "startDate": "تاريخ البدء",
+      "endDate": "تاريخ الانتهاء"
+    },
+    "details": {
+      "user": "المستخدم",
+      "action": "الإجراء",
+      "entity": "الكيان",
+      "description": "الوصف",
+      "changes": "التغييرات",
+      "ipAddress": "عنوان IP",
+      "userAgent": "وكيل المستخدم",
+      "timestamp": "الوقت"
+    },
+    "statistics": {
+      "totalActivities": "إجمالي الأنشطة",
+      "byAction": "حسب الإجراء",
+      "byEntity": "حسب الكيان",
+      "topUsers": "أكثر المستخدمين نشاطاً",
+      "recentActivity": "النشاط الأخير"
+    },
+    "userReport": {
+      "title": "تقرير نشاط المستخدم",
+      "totalActions": "إجمالي الإجراءات",
+      "actionBreakdown": "تفصيل الإجراءات",
+      "dailyActivity": "النشاط اليومي",
+      "recentActions": "الإجراءات الأخيرة"
+    }
+  },
+  "notifications": {
+    "title": "الإشعارات",
+    "subtitle": "إشعارات البريد الإلكتروني والنظام",
+    "email": {
+      "send": "إرسال بريد إلكتروني",
+      "to": "إلى",
+      "subject": "الموضوع",
+      "body": "المحتوى",
+      "cc": "نسخة إلى",
+      "bcc": "نسخة مخفية",
+      "template": "القالب",
+      "priority": "الأولوية",
+      "schedule": "جدولة للاحقاً"
+    },
+    "bulk": {
+      "title": "بريد جماعي",
+      "recipients": "المستلمون",
+      "addRecipient": "إضافة مستلم",
+      "totalRecipients": "إجمالي المستلمين"
+    },
+    "templates": {
+      "welcome": "بريد الترحيب",
+      "overdue_item": "إشعار تأخير",
+      "reservation_ready": "الحجز جاهز",
+      "due_soon": "تذكير بموعد الإرجاع",
+      "fine_notice": "إشعار غرامة",
+      "password_reset": "إعادة تعيين كلمة المرور",
+      "account_created": "تم إنشاء الحساب",
+      "inspection_due": "موعد الفحص",
+      "restoration_urgent": "ترميم عاجل",
+      "system_maintenance": "صيانة النظام"
+    },
+    "priority": {
+      "low": "منخفض",
+      "normal": "عادي",
+      "high": "عالي",
+      "urgent": "عاجل"
+    },
+    "automated": {
+      "overdue": "إرسال إشعارات التأخير",
+      "dueSoon": "إرسال تذكيرات موعد الإرجاع",
+      "inspection": "إرسال تذكيرات الفحص",
+      "dryRun": "معاينة فقط",
+      "sendImmediately": "إرسال فوراً"
+    },
+    "statistics": {
+      "totalSent": "إجمالي المُرسل",
+      "successful": "نجح",
+      "failed": "فشل",
+      "pending": "قيد الانتظار",
+      "byType": "حسب النوع",
+      "byPriority": "حسب الأولوية"
+    },
+    "messages": {
+      "emailSent": "تم إرسال البريد الإلكتروني بنجاح",
+      "emailError": "فشل في إرسال البريد الإلكتروني",
+      "bulkSuccess": "تم إرسال {count} بريد إلكتروني بنجاح",
+      "bulkPartial": "فشل في إرسال {failed} بريد إلكتروني",
+      "bulkError": "فشل في إرسال البريد الجماعي",
+      "overdueSuccess": "تم إرسال {count} إشعار تأخير",
+      "overdueError": "فشل في إرسال إشعارات التأخير",
+      "noOverdue": "لا توجد عناصر متأخرة",
+      "dueSoonSuccess": "تم إرسال {count} تذكير",
+      "dueSoonError": "فشل في إرسال التذكيرات",
+      "noDueSoon": "لا توجد عناصر مستحقة قريباً",
+      "inspectionSuccess": "تم إرسال {count} تذكير فحص",
+      "inspectionError": "فشل في إرسال تذكيرات الفحص"
+    }
   }
 }
