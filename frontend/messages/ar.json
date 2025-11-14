@@ -731,5 +731,155 @@
       "description": "هل أنت متأكد من رغبتك في إعادة تعيين جميع الإعدادات إلى قيمها الافتراضية؟ لا يمكن التراجع عن هذا الإجراء.",
       "confirm": "إعادة التعيين إلى الافتراضي"
     }
+  },
+  "locations": {
+    "title": "إدارة المواقع",
+    "subtitle": "إدارة المواقع التخزينية الهرمية",
+    "addLocation": "إضافة موقع",
+    "editLocation": "تعديل موقع",
+    "deleteLocation": "حذف موقع",
+    "viewDetails": "عرض التفاصيل",
+    "viewHierarchy": "عرض التسلسل الهرمي",
+    "searchPlaceholder": "البحث في المواقع...",
+    "types": {
+      "building": "مبنى",
+      "floor": "طابق",
+      "section": "قسم",
+      "shelf": "رف",
+      "position": "موضع"
+    },
+    "accessLevels": {
+      "public": "عام",
+      "staff_only": "الموظفين فقط",
+      "admin_only": "المسؤولين فقط",
+      "special_permission": "إذن خاص"
+    },
+    "stats": {
+      "totalLocations": "إجمالي المواقع",
+      "totalCapacity": "السعة الإجمالية",
+      "utilization": "نسبة الاستخدام",
+      "overCapacity": "تجاوز السعة",
+      "restricted": "محدود الوصول",
+      "climateControlled": "مكيف حرارياً"
+    },
+    "filters": {
+      "all": "جميع المواقع",
+      "allTypes": "جميع الأنواع",
+      "active": "النشط فقط",
+      "restricted": "محدود الوصول فقط",
+      "climateControlled": "مكيف حرارياً",
+      "hasCapacity": "مع سعة محددة",
+      "overCapacity": "متجاوز السعة"
+    },
+    "form": {
+      "name": "اسم الموقع",
+      "nameAr": "الاسم بالعربية",
+      "code": "رمز الموقع",
+      "codeHint": "معرف فريد (مثال: MLB-F1-S2)",
+      "type": "نوع الموقع",
+      "selectType": "اختر النوع",
+      "parent": "الموقع الأصلي",
+      "selectParent": "اختر الموقع الأصلي",
+      "noParent": "موقع جذر (بدون أصل)",
+      "capacity": "السعة",
+      "capacityHint": "الحد الأقصى لعدد العناصر",
+      "dimensions": "الأبعاد",
+      "dimensionsHint": "مثال: 2م × 1.5م × 0.3م",
+      "temperature": "درجة الحرارة (°م)",
+      "humidity": "الرطوبة (%)",
+      "climateControl": "مكيف حرارياً",
+      "restricted": "وصول محدود",
+      "accessLevel": "مستوى الوصول",
+      "description": "الوصف",
+      "descriptionAr": "الوصف بالعربية",
+      "notes": "ملاحظات",
+      "active": "الحالة النشطة"
+    },
+    "details": {
+      "code": "الرمز",
+      "type": "النوع",
+      "parent": "الموقع الأصلي",
+      "fullPath": "المسار الكامل",
+      "capacity": "السعة",
+      "currentCount": "العناصر الحالية",
+      "utilization": "نسبة الاستخدام",
+      "dimensions": "الأبعاد",
+      "temperature": "درجة الحرارة",
+      "humidity": "الرطوبة",
+      "climateControl": "التكييف الحراري",
+      "restricted": "محدود الوصول",
+      "accessLevel": "مستوى الوصول",
+      "description": "الوصف",
+      "notes": "ملاحظات",
+      "childrenCount": "المواقع الفرعية",
+      "bookCount": "الكتب في الموقع",
+      "createdAt": "تاريخ الإنشاء",
+      "updatedAt": "آخر تحديث"
+    },
+    "hierarchy": {
+      "title": "التسلسل الهرمي للموقع",
+      "ancestors": "المسار",
+      "children": "المواقع الفرعية",
+      "noChildren": "لا توجد مواقع فرعية"
+    },
+    "tree": {
+      "title": "شجرة المواقع",
+      "expand": "توسيع",
+      "collapse": "طي",
+      "expandAll": "توسيع الكل",
+      "collapseAll": "طي الكل"
+    },
+    "history": {
+      "title": "سجل المواقع",
+      "subtitle": "تتبع حركة العناصر",
+      "book": "الكتاب",
+      "from": "من",
+      "to": "إلى",
+      "reason": "السبب",
+      "movedBy": "نقل بواسطة",
+      "movedAt": "تاريخ النقل",
+      "notes": "ملاحظات",
+      "noHistory": "لا يوجد سجل حركة",
+      "reasons": {
+        "circulation": "تداول",
+        "maintenance": "صيانة",
+        "reorganization": "إعادة تنظيم",
+        "transfer": "نقل",
+        "preservation": "حفظ",
+        "inspection": "فحص",
+        "other": "أخرى"
+      }
+    },
+    "bulkMove": {
+      "title": "نقل جماعي للكتب",
+      "selectBooks": "اختر الكتب",
+      "selectDestination": "اختر الوجهة",
+      "reason": "سبب النقل",
+      "notes": "ملاحظات",
+      "moveButton": "نقل {count} كتاب",
+      "success": "تم نقل {count} كتاب بنجاح",
+      "partialSuccess": "تم نقل {success} كتاب، فشل {failed}"
+    },
+    "messages": {
+      "createSuccess": "تم إنشاء الموقع بنجاح",
+      "updateSuccess": "تم تحديث الموقع بنجاح",
+      "deleteSuccess": "تم حذف الموقع بنجاح",
+      "deleteConfirm": "هل أنت متأكد من حذف هذا الموقع؟",
+      "deleteWarning": "يحتوي هذا الموقع على {count} كتاب. يرجى نقلها أولاً.",
+      "deleteChildrenWarning": "يحتوي هذا الموقع على {count} موقع فرعي. احذفها أولاً.",
+      "codeExists": "يوجد موقع بهذا الرمز بالفعل",
+      "circularHierarchy": "لا يمكن تعيين الموقع كأصل لنفسه",
+      "noLocations": "لم يتم العثور على مواقع",
+      "loadingLocations": "جاري تحميل المواقع...",
+      "errorLoading": "خطأ في تحميل المواقع"
+    },
+    "validation": {
+      "nameRequired": "اسم الموقع مطلوب",
+      "codeRequired": "رمز الموقع مطلوب",
+      "typeRequired": "نوع الموقع مطلوب",
+      "capacityPositive": "يجب أن تكون السعة موجبة",
+      "temperatureValid": "يجب أن تكون درجة الحرارة صحيحة",
+      "humidityRange": "يجب أن تكون الرطوبة بين 0 و 100"
+    }
   }
 }

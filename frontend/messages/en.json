@@ -731,5 +731,155 @@
       "description": "Are you sure you want to reset all settings to their default values? This action cannot be undone.",
       "confirm": "Reset to Defaults"
     }
+  },
+  "locations": {
+    "title": "Location Management",
+    "subtitle": "Manage hierarchical storage locations",
+    "addLocation": "Add Location",
+    "editLocation": "Edit Location",
+    "deleteLocation": "Delete Location",
+    "viewDetails": "View Details",
+    "viewHierarchy": "View Hierarchy",
+    "searchPlaceholder": "Search locations...",
+    "types": {
+      "building": "Building",
+      "floor": "Floor",
+      "section": "Section",
+      "shelf": "Shelf",
+      "position": "Position"
+    },
+    "accessLevels": {
+      "public": "Public",
+      "staff_only": "Staff Only",
+      "admin_only": "Admin Only",
+      "special_permission": "Special Permission"
+    },
+    "stats": {
+      "totalLocations": "Total Locations",
+      "totalCapacity": "Total Capacity",
+      "utilization": "Utilization",
+      "overCapacity": "Over Capacity",
+      "restricted": "Restricted",
+      "climateControlled": "Climate Controlled"
+    },
+    "filters": {
+      "all": "All Locations",
+      "allTypes": "All Types",
+      "active": "Active Only",
+      "restricted": "Restricted Only",
+      "climateControlled": "Climate Controlled",
+      "hasCapacity": "With Capacity",
+      "overCapacity": "Over Capacity"
+    },
+    "form": {
+      "name": "Location Name",
+      "nameAr": "Arabic Name",
+      "code": "Location Code",
+      "codeHint": "Unique identifier (e.g., MLB-F1-S2)",
+      "type": "Location Type",
+      "selectType": "Select type",
+      "parent": "Parent Location",
+      "selectParent": "Select parent location",
+      "noParent": "Root Location (No Parent)",
+      "capacity": "Capacity",
+      "capacityHint": "Maximum number of items",
+      "dimensions": "Dimensions",
+      "dimensionsHint": "e.g., 2m x 1.5m x 0.3m",
+      "temperature": "Temperature (°C)",
+      "humidity": "Humidity (%)",
+      "climateControl": "Climate Controlled",
+      "restricted": "Restricted Access",
+      "accessLevel": "Access Level",
+      "description": "Description",
+      "descriptionAr": "Arabic Description",
+      "notes": "Notes",
+      "active": "Active Status"
+    },
+    "details": {
+      "code": "Code",
+      "type": "Type",
+      "parent": "Parent Location",
+      "fullPath": "Full Path",
+      "capacity": "Capacity",
+      "currentCount": "Current Items",
+      "utilization": "Utilization",
+      "dimensions": "Dimensions",
+      "temperature": "Temperature",
+      "humidity": "Humidity",
+      "climateControl": "Climate Control",
+      "restricted": "Restricted",
+      "accessLevel": "Access Level",
+      "description": "Description",
+      "notes": "Notes",
+      "childrenCount": "Child Locations",
+      "bookCount": "Books in Location",
+      "createdAt": "Created",
+      "updatedAt": "Last Updated"
+    },
+    "hierarchy": {
+      "title": "Location Hierarchy",
+      "ancestors": "Path",
+      "children": "Child Locations",
+      "noChildren": "No child locations"
+    },
+    "tree": {
+      "title": "Location Tree",
+      "expand": "Expand",
+      "collapse": "Collapse",
+      "expandAll": "Expand All",
+      "collapseAll": "Collapse All"
+    },
+    "history": {
+      "title": "Location History",
+      "subtitle": "Track item movements",
+      "book": "Book",
+      "from": "From",
+      "to": "To",
+      "reason": "Reason",
+      "movedBy": "Moved By",
+      "movedAt": "Moved At",
+      "notes": "Notes",
+      "noHistory": "No movement history",
+      "reasons": {
+        "circulation": "Circulation",
+        "maintenance": "Maintenance",
+        "reorganization": "Reorganization",
+        "transfer": "Transfer",
+        "preservation": "Preservation",
+        "inspection": "Inspection",
+        "other": "Other"
+      }
+    },
+    "bulkMove": {
+      "title": "Bulk Move Books",
+      "selectBooks": "Select Books",
+      "selectDestination": "Select Destination",
+      "reason": "Reason for Move",
+      "notes": "Notes",
+      "moveButton": "Move {count} Books",
+      "success": "Moved {count} books successfully",
+      "partialSuccess": "Moved {success} books, {failed} failed"
+    },
+    "messages": {
+      "createSuccess": "Location created successfully",
+      "updateSuccess": "Location updated successfully",
+      "deleteSuccess": "Location deleted successfully",
+      "deleteConfirm": "Are you sure you want to delete this location?",
+      "deleteWarning": "This location has {count} books. Please move them first.",
+      "deleteChildrenWarning": "This location has {count} child locations. Delete them first.",
+      "codeExists": "A location with this code already exists",
+      "circularHierarchy": "Cannot set location as its own parent",
+      "noLocations": "No locations found",
+      "loadingLocations": "Loading locations...",
+      "errorLoading": "Error loading locations"
+    },
+    "validation": {
+      "nameRequired": "Location name is required",
+      "codeRequired": "Location code is required",
+      "typeRequired": "Location type is required",
+      "capacityPositive": "Capacity must be positive",
+      "temperatureValid": "Temperature must be valid",
+      "humidityRange": "Humidity must be between 0 and 100"
+    }
   }
 }
