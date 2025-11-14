@@ -273,3 +273,102 @@ async def delete_user(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Failed to delete user: {error_msg}"
         )
+
+
+@router.patch("/{user_id}/status", response_model=UserResponse, summary="Toggle user active status")
+async def toggle_user_status(
+    user_id: str,
+    is_active: bool = Query(..., description="New active status"),
+    user_service: UserService = Depends(get_user_service)
+):
+    """
+    Toggle user active/inactive status
+
+    - **is_active**: true to activate, false to deactivate
+    """
+    try:
+        user = await user_service.update_user(user_id, {"is_active": is_active})
+        return user
+    except Exception as e:
+        error_msg = str(e)
+        if "not found" in error_msg.lower():
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="User not found"
+            )
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to update user status: {error_msg}"
+        )
+
+
+@router.get("/search", summary="Search users")
+async def search_users(
+    q: str = Query(..., min_length=2, description="Search query (min 2 characters)"),
+    limit: int = Query(10, ge=1, le=50, description="Maximum results to return"),
+    user_service: UserService = Depends(get_user_service)
+):
+    """
+    Search users by name or email
+
+    - **q**: Search query (searches in full_name, email, arabic_name)
+    - **limit**: Maximum number of results (default: 10, max: 50)
+
+    Returns array of user objects matching the search query
+    """
+    try:
+        result = await user_service.get_users(
+            page=1,
+            page_size=limit,
+            search=q,
+            sort_by="full_name",
+            sort_order="asc"
+        )
+        return result['items']
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to search users: {str(e)}"
+        )
+
+
+@router.get("/roles", summary="Get available user roles")
+async def get_user_roles(user_service: UserService = Depends(get_user_service)):
+    """
+    Get list of available user roles
+
+    Returns array of role objects with id and name
+    """
+    try:
+        roles = await user_service.get_roles()
+        return roles
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to fetch roles: {str(e)}"
+        )
+
+
+@router.post("/bulk-delete", summary="Bulk delete users")
+async def bulk_delete_users(
+    user_ids: list[str] = Query(..., description="List of user IDs to delete"),
+    user_service: UserService = Depends(get_user_service)
+):
+    """
+    Delete multiple users at once
+
+    - **user_ids**: Array of user UUIDs to delete
+
+    Returns count of deleted users
+    """
+    try:
+        deleted_count = await user_service.bulk_delete_users(user_ids)
+        return {
+            "message": f"Successfully deleted {deleted_count} users",
+            "deleted_count": deleted_count
+        }
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to delete users: {str(e)}"
+        )
