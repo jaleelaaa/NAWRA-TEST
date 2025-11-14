@@ -51,10 +51,12 @@ class Settings(BaseSettings):
     # Email Settings (Resend)
     RESEND_API_KEY: str = ""
     EMAIL_FROM: str = "noreply@nawra-library.om"
+    FRONTEND_URL: str = "http://localhost:3000"
 
     # File Upload Settings
     MAX_FILE_SIZE: int = 10 * 1024 * 1024  # 10MB
     UPLOAD_DIR: str = "uploads"
+    ALLOWED_UPLOAD_EXTENSIONS: List[str] = [".jpg", ".jpeg", ".png", ".gif", ".pdf", ".doc", ".docx"]
 
     # Pagination
     DEFAULT_PAGE_SIZE: int = 20
@@ -70,3 +72,8 @@ class Settings(BaseSettings):
 
 # Create global settings instance
 settings = Settings()
+
+
+def get_settings() -> Settings:
+    """Get settings instance"""
+    return settings
