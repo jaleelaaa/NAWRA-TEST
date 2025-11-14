@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from .endpoints import auth, analytics, dashboard, users, circulation, reports, settings, books, locations
+from .endpoints import auth, analytics, dashboard, users, circulation, reports, settings, books, locations, fines
 
 api_router = APIRouter(prefix="/v1")
 
@@ -21,7 +21,7 @@ api_router.include_router(reports.router, prefix="/reports", tags=["Reports"])
 api_router.include_router(settings.router, prefix="/settings", tags=["Settings"])
 api_router.include_router(books.router, prefix="", tags=["Books", "Categories"])
 api_router.include_router(locations.router, prefix="/locations", tags=["Locations"])
+api_router.include_router(fines.router, prefix="/fines", tags=["Fines"])
 
 # We'll add these as we build each feature
-# api_router.include_router(inventory.router, prefix="/inventory", tags=["Inventory"])
-# api_router.include_router(acquisitions.router, prefix="/acquisitions", tags=["Acquisitions"])
+# api_router.include_router(inventory.router, prefix="/inventory", tags=["Acquisitions"])
