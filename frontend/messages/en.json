@@ -23,6 +23,7 @@
     "circulation": "Circulation",
     "reports": "Reports",
     "settings": "Settings",
+    "guide": "User Guide",
     "logout": "Logout",
     "myAccount": "My Account",
     "profile": "Profile"
@@ -572,6 +573,276 @@
     "loading": "Loading reports...",
     "error": "Failed to load reports",
     "retry": "Retry"
+  },
+  "guide": {
+    "title": "Interactive User Guide",
+    "subtitle": "Learn how to use NAWRA Library Management System step by step",
+    "breadcrumb": "User Guide",
+    "welcome": {
+      "title": "Welcome to NAWRA!",
+      "description": "This guide will help you understand and use all features of the library management system easily.",
+      "getStarted": "Get Started",
+      "features": "What You'll Learn",
+      "feature1": "How to manage library users",
+      "feature2": "How to organize book catalog",
+      "feature3": "How to handle circulation",
+      "feature4": "How to generate reports",
+      "feature5": "How to customize settings"
+    },
+    "navigation": {
+      "previous": "Previous",
+      "next": "Next Step",
+      "backToMenu": "Back to Menu",
+      "complete": "Complete Guide",
+      "progress": "Progress"
+    },
+    "sections": {
+      "gettingStarted": "Getting Started",
+      "userManagement": "Managing Users",
+      "bookCatalog": "Book Catalog",
+      "circulation": "Circulation",
+      "reports": "Reports & Analytics",
+      "settings": "Settings"
+    },
+    "gettingStarted": {
+      "title": "Getting Started with NAWRA",
+      "step1": {
+        "title": "1. Log In to the System",
+        "description": "Open your web browser and go to the NAWRA login page. Enter your email and password provided by your administrator.",
+        "tip": "Tip: Check 'Remember me' to stay logged in for 30 days.",
+        "screenshot": "Screenshot: Login page with email and password fields"
+      },
+      "step2": {
+        "title": "2. Understand the Dashboard",
+        "description": "After logging in, you'll see the Dashboard. This is your main control center showing important statistics.",
+        "items": [
+          "Total Users - Number of registered library users",
+          "Total Books - Books in your collection",
+          "Active Loans - Books currently borrowed",
+          "Overdue Items - Books that need to be returned"
+        ],
+        "screenshot": "Screenshot: Dashboard with statistics cards"
+      },
+      "step3": {
+        "title": "3. Navigate the Menu",
+        "description": "Use the left sidebar to access different sections. Click on any menu item to open that section.",
+        "menuItems": [
+          "Dashboard - Overview and statistics",
+          "Users - Manage library members",
+          "Books - Manage book collection",
+          "Circulation - Issue and return books",
+          "Reports - Generate analytics reports",
+          "Settings - Customize preferences"
+        ],
+        "screenshot": "Screenshot: Sidebar navigation menu"
+      },
+      "step4": {
+        "title": "4. Switch Language",
+        "description": "You can switch between English and Arabic anytime. Click the language button at the top right corner.",
+        "tip": "Tip: The interface supports right-to-left (RTL) for Arabic language.",
+        "screenshot": "Screenshot: Language switcher button"
+      }
+    },
+    "userManagement": {
+      "title": "Managing Library Users",
+      "intro": "Learn how to add, edit, and manage library users in the system.",
+      "step1": {
+        "title": "1. View All Users",
+        "description": "Click on 'Users' in the sidebar. You'll see a list of all registered users with their information.",
+        "info": "You can see user name, email, role, status, and when they joined.",
+        "screenshot": "Screenshot: Users list page"
+      },
+      "step2": {
+        "title": "2. Search for a User",
+        "description": "Type in the search box to find users by name, email, or ID. The results update instantly as you type.",
+        "tip": "Tip: Use filters to narrow down by role, status, or user type.",
+        "screenshot": "Screenshot: Search bar with filters"
+      },
+      "step3": {
+        "title": "3. Add a New User",
+        "description": "Click the 'Add User' button. Fill in the required information:",
+        "fields": [
+          "Full Name (in English and Arabic)",
+          "Email Address",
+          "Password (minimum 8 characters)",
+          "Phone Number",
+          "Role (Admin, Librarian, Student, etc.)",
+          "User Type (Staff or Patron)"
+        ],
+        "action": "Click 'Create User' to save.",
+        "screenshot": "Screenshot: Add user form"
+      },
+      "step4": {
+        "title": "4. Edit User Information",
+        "description": "Click the 'Edit' button next to any user. Update their information and click 'Save Changes'.",
+        "tip": "Tip: Leave the password field empty if you don't want to change it.",
+        "screenshot": "Screenshot: Edit user form"
+      },
+      "step5": {
+        "title": "5. Delete a User",
+        "description": "Click the 'Delete' button next to a user. Confirm the deletion when prompted.",
+        "warning": "Warning: This action cannot be undone!",
+        "screenshot": "Screenshot: Delete confirmation dialog"
+      }
+    },
+    "bookCatalog": {
+      "title": "Managing Book Catalog",
+      "intro": "Learn how to organize and manage your library's book collection.",
+      "step1": {
+        "title": "1. Browse Books",
+        "description": "Click on 'Books' in the sidebar to see all books in your library collection.",
+        "info": "Each book card shows title, author, category, availability, and number of copies.",
+        "screenshot": "Screenshot: Book catalog grid view"
+      },
+      "step2": {
+        "title": "2. Search for Books",
+        "description": "Use the search box to find books by title, author, or ISBN. Results appear instantly.",
+        "screenshot": "Screenshot: Book search"
+      },
+      "step3": {
+        "title": "3. Filter Books",
+        "description": "Use filters to narrow down books:",
+        "filters": [
+          "Category (History, Literature, Poetry, etc.)",
+          "Status (Available, Borrowed, Reserved)",
+          "Language (English, Arabic)"
+        ],
+        "screenshot": "Screenshot: Filter options"
+      },
+      "step4": {
+        "title": "4. Add a New Book",
+        "description": "Click the 'Add Book' button and fill in book details:",
+        "fields": [
+          "Title (English and Arabic)",
+          "Author name",
+          "ISBN number",
+          "Category",
+          "Number of copies",
+          "Publication year",
+          "Description"
+        ],
+        "screenshot": "Screenshot: Add book form"
+      },
+      "step5": {
+        "title": "5. Edit or Delete Books",
+        "description": "Click the menu icon on any book card. Select 'Edit' to update information or 'Delete' to remove the book.",
+        "screenshot": "Screenshot: Book actions menu"
+      }
+    },
+    "circulation": {
+      "title": "Circulation Management",
+      "intro": "Learn how to issue books to users and process returns.",
+      "step1": {
+        "title": "1. View Circulation Records",
+        "description": "Click on 'Circulation' in the sidebar to see all active loans and returns.",
+        "info": "You can see who borrowed which book, issue date, due date, and status.",
+        "screenshot": "Screenshot: Circulation list"
+      },
+      "step2": {
+        "title": "2. Issue a Book",
+        "description": "Click 'Issue Book' button. Follow these steps:",
+        "steps": [
+          "Search and select the user",
+          "Search and select the book",
+          "Set the due date",
+          "Click 'Issue Book' to complete"
+        ],
+        "tip": "Tip: You can enable email notification to inform the user.",
+        "screenshot": "Screenshot: Issue book dialog"
+      },
+      "step3": {
+        "title": "3. Return a Book",
+        "description": "Click 'Return Book' button. Scan or enter the book ID, check the book condition, and click 'Process Return'.",
+        "info": "The system will automatically calculate any fines if the book is overdue.",
+        "screenshot": "Screenshot: Return book dialog"
+      },
+      "step4": {
+        "title": "4. Track Overdue Books",
+        "description": "Use the 'Overdue' filter to see all books that are past their due date.",
+        "action": "You can send reminder emails to users with overdue books.",
+        "screenshot": "Screenshot: Overdue filter"
+      }
+    },
+    "reports": {
+      "title": "Reports & Analytics",
+      "intro": "Learn how to generate reports and view library statistics.",
+      "step1": {
+        "title": "1. Access Reports",
+        "description": "Click on 'Reports' in the sidebar to open the reports page.",
+        "screenshot": "Screenshot: Reports dashboard"
+      },
+      "step2": {
+        "title": "2. Select Report Type",
+        "description": "Choose from different report types:",
+        "types": [
+          "Circulation Report - Track loans and returns",
+          "User Activity Report - See user engagement",
+          "Collection Report - Overview of book categories",
+          "Financial Report - View fines and payments"
+        ],
+        "screenshot": "Screenshot: Report type selection"
+      },
+      "step3": {
+        "title": "3. Apply Filters",
+        "description": "Set date range and other filters to customize your report. Choose from presets like 'This Month' or 'Last 3 Months'.",
+        "screenshot": "Screenshot: Report filters"
+      },
+      "step4": {
+        "title": "4. View Charts",
+        "description": "The report displays interactive charts showing trends over time and distribution by categories.",
+        "screenshot": "Screenshot: Report charts"
+      },
+      "step5": {
+        "title": "5. Export Reports",
+        "description": "Click the 'Export' button to download the report. Choose from PDF, Excel, or CSV format.",
+        "screenshot": "Screenshot: Export options"
+      }
+    },
+    "settings": {
+      "title": "Customizing Settings",
+      "intro": "Learn how to personalize your system preferences.",
+      "step1": {
+        "title": "1. Access Settings",
+        "description": "Click on 'Settings' in the sidebar to open the settings page.",
+        "screenshot": "Screenshot: Settings page"
+      },
+      "step2": {
+        "title": "2. Update Profile",
+        "description": "In the 'General' tab, update your display name and preferences.",
+        "screenshot": "Screenshot: General settings"
+      },
+      "step3": {
+        "title": "3. Change Appearance",
+        "description": "In the 'Appearance' tab, choose your preferred theme (Light, Dark, or Auto).",
+        "screenshot": "Screenshot: Appearance settings"
+      },
+      "step4": {
+        "title": "4. Configure Notifications",
+        "description": "Enable or disable email and in-app notifications for different events.",
+        "screenshot": "Screenshot: Notification settings"
+      },
+      "step5": {
+        "title": "5. Save Changes",
+        "description": "Click the 'Save' button at the bottom to apply your changes.",
+        "tip": "Tip: You can reset to default settings anytime.",
+        "screenshot": "Screenshot: Save button"
+      }
+    },
+    "tips": {
+      "title": "Quick Tips",
+      "tip1": "Use keyboard shortcuts to navigate faster",
+      "tip2": "Export data regularly for backup",
+      "tip3": "Set up email notifications for overdue books",
+      "tip4": "Use filters to find information quickly",
+      "tip5": "Check the dashboard daily for important updates"
+    },
+    "help": {
+      "title": "Need More Help?",
+      "description": "If you have questions or need assistance:",
+      "contact": "Contact your system administrator",
+      "email": "Email: support@nawra.om",
+      "phone": "Phone: +968 XXXX XXXX"
+    }
   },
   "settings": {
     "title": "Settings",

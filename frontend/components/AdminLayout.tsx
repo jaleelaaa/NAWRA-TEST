@@ -10,6 +10,7 @@ import {
   Settings,
   BarChart3,
   BookMarked,
+  BookOpen,
   Bell,
   LogOut,
   Menu,
@@ -52,6 +53,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     { id: 'catalog', label: t('nav.catalog'), icon: Book, href: '/admin/catalog' },
     { id: 'circulation', label: t('nav.circulation'), icon: BookMarked, href: '/admin/circulation' },
     { id: 'reports', label: t('nav.reports'), icon: BarChart3, href: '/admin/reports' },
+    { id: 'guide', label: t('nav.guide'), icon: BookOpen, href: '/admin/guide' },
     { id: 'settings', label: t('nav.settings'), icon: Settings, href: '/admin/settings' },
   ];
 
