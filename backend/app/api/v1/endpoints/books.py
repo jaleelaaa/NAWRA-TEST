@@ -1,7 +1,7 @@
 """
 Books and categories management endpoints.
 """
-from fastapi import APIRouter, HTTPException, status, Depends, Query
+from fastapi import APIRouter, HTTPException, status, Depends, Query, UploadFile, File
 from fastapi.responses import Response
 from typing import Optional
 from uuid import UUID
@@ -28,6 +28,7 @@ from app.models.books import (
 )
 from app.services.books_service import BooksService
 from app.services.barcode_service import get_barcode_service
+from app.services.file_upload_service import get_file_upload_service
 from datetime import date
 
 
@@ -947,4 +948,145 @@ async def get_isbn_barcode_image(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Failed to generate ISBN barcode: {str(e)}"
+        )
+
+
+# =====================================================
+# File Upload Endpoints
+# =====================================================
+
+@router.post(
+    "/books/{book_id}/upload-cover",
+    summary="Upload book cover image",
+    tags=["Books", "Files"]
+)
+async def upload_book_cover(
+    book_id: UUID,
+    file: UploadFile = File(...),
+    books_service: BooksService = Depends(get_books_service)
+):
+    """
+    Upload cover image for a book.
+
+    Args:
+        book_id: UUID of the book
+        file: Image file (JPEG, PNG, GIF)
+
+    Returns:
+        URLs of uploaded cover and thumbnail
+
+    Raises:
+        404: Book not found
+        400: Invalid file type or size
+        500: Failed to upload
+    """
+    try:
+        file_upload_service = get_file_upload_service()
+
+        # Get book to verify it exists
+        book = await books_service.get_book_by_id(book_id)
+        if not book:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Book not found"
+            )
+
+        # Read file content
+        file_content = await file.read()
+
+        # Upload cover
+        result = await file_upload_service.upload_book_cover(
+            file_content=file_content,
+            filename=file.filename,
+            book_id=str(book_id),
+            create_thumbnail=True
+        )
+
+        # Update book with cover URLs
+        update_data = {
+            "cover_image_url": result["cover_url"]
+        }
+        if "thumbnail_url" in result:
+            update_data["thumbnail_url"] = result["thumbnail_url"]
+
+        updated_book = await books_service.update_book(book_id, update_data)
+
+        return {
+            "success": True,
+            "message": "Cover uploaded successfully",
+            "cover_url": result["cover_url"],
+            "thumbnail_url": result.get("thumbnail_url"),
+            "book": updated_book
+        }
+
+    except HTTPException:
+        raise
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e)
+        )
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to upload cover: {str(e)}"
+        )
+
+
+@router.delete(
+    "/books/{book_id}/cover",
+    summary="Delete book cover image",
+    tags=["Books", "Files"]
+)
+async def delete_book_cover(
+    book_id: UUID,
+    books_service: BooksService = Depends(get_books_service)
+):
+    """
+    Delete cover image for a book.
+
+    Args:
+        book_id: UUID of the book
+
+    Returns:
+        Success message
+
+    Raises:
+        404: Book not found
+        500: Failed to delete
+    """
+    try:
+        file_upload_service = get_file_upload_service()
+
+        # Get book to verify it exists
+        book = await books_service.get_book_by_id(book_id)
+        if not book:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Book not found"
+            )
+
+        # Delete cover files
+        await file_upload_service.delete_book_cover(str(book_id))
+
+        # Update book to remove cover URLs
+        await books_service.update_book(
+            book_id,
+            {
+                "cover_image_url": None,
+                "thumbnail_url": None
+            }
+        )
+
+        return {
+            "success": True,
+            "message": "Cover deleted successfully"
+        }
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to delete cover: {str(e)}"
         )
